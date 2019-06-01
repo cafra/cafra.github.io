@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://cafra.github.io/</id>
     <title>cafra</title>
-    <updated>2019-06-01T07:02:40.122Z</updated>
+    <updated>2019-06-01T07:07:09.078Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://cafra.github.io/"/>
     <link rel="self" href="https://cafra.github.io//atom.xml"/>
@@ -18,19 +18,17 @@
         <updated>2018-12-11T16:00:00.000Z</updated>
         <summary type="html"><![CDATA[<p>👏  终于下定决心<strong>考研</strong>了！
 ✍️  <strong>考研</strong></p>
-<ul>
-<li>大学时为了媳妇和孩子，放弃了考研；</li>
-<li>现在每天除了工作、加班；其他时间都是备考和健身；</li>
-<li>在孩子美好的童年，媳妇最美的时光，不能陪伴他们，希望当我获得北航MEM后，可以多陪陪家人；</li>
-</ul>
+<pre><code> 大学时为了媳妇和孩子，放弃了考研；
+ 现在每天除了工作、加班；其他时间都是备考和健身；
+ 在孩子美好的童年，媳妇最美的时光，不能陪伴他们，希望当我获得北航MEM后，可以多陪陪家人；
+</code></pre>
 ]]></summary>
         <content type="html"><![CDATA[<p>👏  终于下定决心<strong>考研</strong>了！
 ✍️  <strong>考研</strong></p>
-<ul>
-<li>大学时为了媳妇和孩子，放弃了考研；</li>
-<li>现在每天除了工作、加班；其他时间都是备考和健身；</li>
-<li>在孩子美好的童年，媳妇最美的时光，不能陪伴他们，希望当我获得北航MEM后，可以多陪陪家人；</li>
-</ul>
+<pre><code> 大学时为了媳妇和孩子，放弃了考研；
+ 现在每天除了工作、加班；其他时间都是备考和健身；
+ 在孩子美好的童年，媳妇最美的时光，不能陪伴他们，希望当我获得北航MEM后，可以多陪陪家人；
+</code></pre>
 <!-- more -->
 <p><a href="https://github.com/cafra">Github</a><br>
 <a href="https://www.cnblogs.com/cz-blog/">博客</a></p>
