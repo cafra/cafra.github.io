@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://cafra.github.io/</id>
     <title>cafra</title>
-    <updated>2019-06-01T07:11:11.072Z</updated>
+    <updated>2019-06-01T07:11:53.992Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://cafra.github.io/"/>
     <link rel="self" href="https://cafra.github.io//atom.xml"/>
@@ -32,6 +32,15 @@
 <!-- more -->
 <p><a href="https://github.com/cafra">Github</a><br>
 <a href="https://www.cnblogs.com/cz-blog/">博客</a></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[关于]]></title>
+        <id>https://cafra.github.io//post/about</id>
+        <link href="https://cafra.github.io//post/about">
+        </link>
+        <updated>2019-01-25T11:09:48.000Z</updated>
+        <content type="html"><![CDATA[<p>这是关于的页面，可以在这里向世界介绍你！</p>
 ]]></content>
     </entry>
 </feed>
