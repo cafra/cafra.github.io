@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://cafra.github.io/</id>
     <title>cafra</title>
-    <updated>2019-08-07T12:38:33.242Z</updated>
+    <updated>2019-12-25T05:50:35.535Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://cafra.github.io/"/>
     <link rel="self" href="https://cafra.github.io//atom.xml"/>
@@ -10,6 +10,30 @@
     <logo>https://cafra.github.io//images/avatar.png</logo>
     <icon>https://cafra.github.io//favicon.ico</icon>
     <rights>All rights reserved 2019, cafra</rights>
+    <entry>
+        <title type="html"><![CDATA[我在超原子的2019年]]></title>
+        <id>https://cafra.github.io//post/wo-zai-chao-yuan-zi-de-2019-nian</id>
+        <link href="https://cafra.github.io//post/wo-zai-chao-yuan-zi-de-2019-nian">
+        </link>
+        <updated>2019-12-25T01:59:51.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="三个词形容2019">三个词形容2019</h1>
+<pre><code>- 业务发展:贷款端业务稳步推进、投资端业务飞速发展；
+- 团队壮大:每个人都可以独挡一面；
+- 架构升级:满足快速布局海外市场的需求；
+</code></pre>
+<h1 id="与超原子的故事">与超原子的故事</h1>
+<pre><code>		从17年12月加入金融部，直到年会出发前，还在忙着项目上线；
+		18年6月开始的印尼p2p牌照申请，整个团队都拧成一股绳，通宵达旦，至今我都觉得的团队干了一件值得回忆的大事。
+		19年5月lender 活动开始发力，从6月份到9月，lender资金占系统撮合交易的75% 增长到100%，实现平台的良性运转；
+		紧接着11月就开始了新系统的研发工作，近期菲律宾市场即将开始发布，越南市场年前开发完成，这些成果，离不开团队的每一个人：宋世军、陆康、陈忠敏、刘斌、柴轮轮和平台组同学的配合。
+</code></pre>
+<h1 id="新一年的展望">新一年的展望</h1>
+<pre><code>	- 印尼市场不断扩展新业务，成为行业翘楚；
+	- 新市场在菲律宾、越南、印度遍地开花，实现全球化运营；
+	- 系统容器化部署和弹性扩展，不断提高系统稳定性；
+	- 每个人都将超原子的文化融入自己的工作中，成为彼此值得信赖的战友； </code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[工程管理硕士开始备考点滴]]></title>
         <id>https://cafra.github.io//post/mem</id>
