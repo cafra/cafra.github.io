@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://cafra.github.io/</id>
     <title>cafra</title>
-    <updated>2019-12-25T05:57:56.479Z</updated>
+    <updated>2019-12-26T03:23:40.004Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://cafra.github.io/"/>
     <link rel="self" href="https://cafra.github.io//atom.xml"/>
@@ -44,14 +44,14 @@
         <link href="https://cafra.github.io//post/mem">
         </link>
         <updated>2019-04-19T16:00:00.000Z</updated>
-        <summary type="html"><![CDATA[<p>👏  终于下定决心<strong>考研</strong>了！
+        <summary type="html"><![CDATA[<p>👏  终于下定决心<strong>考研</strong>了！<br>
 ✍️  <strong>考研</strong></p>
 <pre><code> 大学时为了媳妇和孩子，放弃了考研；
  现在每天除了工作、加班；其他时间都是备考和健身；
  在孩子美好的童年，媳妇最美的时光，不能陪伴他们，希望当我获得北航MEM后，可以多陪陪家人；
 </code></pre>
 ]]></summary>
-        <content type="html"><![CDATA[<p>👏  终于下定决心<strong>考研</strong>了！
+        <content type="html"><![CDATA[<p>👏  终于下定决心<strong>考研</strong>了！<br>
 ✍️  <strong>考研</strong></p>
 <pre><code> 大学时为了媳妇和孩子，放弃了考研；
  现在每天除了工作、加班；其他时间都是备考和健身；
