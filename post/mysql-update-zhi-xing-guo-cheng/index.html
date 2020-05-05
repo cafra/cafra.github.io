@@ -6,7 +6,7 @@
 <meta name="robots" content="all,follow">
 <meta name="googlebot" content="index,follow,snippet,archive">
 <title>mysql update 执行过程 | cafra</title>
-<link rel="shortcut icon" href="https://cafra.github.io//favicon.ico?v=1588647321526">
+<link rel="shortcut icon" href="https://cafra.github.io//favicon.ico?v=1588668413696">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cafra.github.io//styles/main.css" type='text/css' media='all'>
 
@@ -181,9 +181,60 @@
             <article>
               <!-- more -->
 <figure data-type="image" tabindex="1"><img src="https://cafra.github.io//post-images/1588647116759.png" alt="" loading="lazy"></figure>
-<p>事务提交2个阶段如何保证一致性；<br>
-redo log:<br>
-bin log:</p>
+<p>事务提交2个阶段如何保证一致性；或者说是如何恢复的？<br>
+crash 重启后：</p>
+<ol>
+<li>代开redo log 和系统表空间文件IbdataN</li>
+<li>找到最新Checkpoint ，扫描redo log 即处于prepare 状态的redo log</li>
+<li>如果在bin log 存在记录，则commit ,否则rollback事务；</li>
+</ol>
+<p>事务隔离级别：</p>
+<ol>
+<li>read uncommited = ru ；B session 未提交，A可以读到；</li>
+<li>read commited = rc    ；B session 提交后，A可以读到；</li>
+<li>repeatable read= rr     ；B session 提交，不影响A 的数据；但可能幻读（增删）</li>
+<li>serializable 串行          ；不存在：赃读、不可重复读、幻读问题；效率最低</li>
+</ol>
+<p>索引设计原则：</p>
+<ol>
+<li>where group order，关联查询 列可以添加索引；</li>
+<li>索引要适当，否则影响cud 性能；</li>
+<li>在区分度高的字段建索引，否则没有效果，即过度索引；</li>
+<li>唯一索引比不同索引性能要高；</li>
+<li>字段尽量不要null，否则可能全表扫描；</li>
+<li>多列索引：最左原则，注意使用顺序，尽量区分度高的放在左边</li>
+<li>避免隐式转换；</li>
+<li>where 中避免使用函数；</li>
+<li>明确select 的字段；</li>
+<li>禁止负向查询，not in, !=,&lt;&gt;,!&lt;,!&gt;,not like</li>
+<li>缩小结果集，再join；</li>
+<li>like %xx 匹配，无法使用索引；</li>
+<li>or 导致索引失效；</li>
+<li>串列需要前缀索引，提高查询速度；</li>
+<li></li>
+</ol>
+<p>联合索引及其使用：</p>
+<ol>
+<li>最左原则；注意索引顺序；</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>索引类型</th>
+<th>补充说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>主键</td>
+<td>唯一，不能为空，表唯一，hash 索引，准确查找，叶子节点存放的是整行数据，属于聚簇索引</td>
+</tr>
+<tr>
+<td>唯一</td>
+<td>唯一，可以为空，可以多个 ，hash/btree 索引，叶子节点存放的是主键的值，属于二级索引，效率低于主键索引</td>
+</tr>
+</tbody>
+</table>
 
             </article>
           </div>
@@ -218,7 +269,7 @@ bin log:</p>
           </div>
           <div class="author-meta">
             <div class="author">
-              <img alt='' src="https://cafra.github.io//images/avatar.png?v=1588647321526" class='avatar avatar-72 photo' height='72' width='72'>
+              <img alt='' src="https://cafra.github.io//images/avatar.png?v=1588668413696" class='avatar avatar-72 photo' height='72' width='72'>
               <span>WRITTEN BY: &nbsp;&nbsp;&nbsp;<a href='https://cafra.github.io/'>陈贞</a> </span>
             </div>
             <div class="bio">
