@@ -1,11 +1,11 @@
 <html>
 <head>
-    <meta charset="utf-8" />
+  <meta charset="utf-8" />
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="robots" content="all,follow">
 <meta name="googlebot" content="index,follow,snippet,archive">
-<title>mem | cafra</title>
+<title>redis 数据类型 | cafra</title>
 <link rel="shortcut icon" href="https://cafra.github.io//favicon.ico?v=1588692050333">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cafra.github.io//styles/main.css" type='text/css' media='all'>
@@ -29,7 +29,8 @@
 </head>
 <body class="home blog ct-body standard">
 <div id="overflow-container" class="overflow-container">
-    <header id="site-header" class="site-header" role="banner">
+  <a class="skip-content" href="#main">Skip to content</a>
+  <header id="site-header" class="site-header" role="banner">
     <div class='top-navigation top-navigation-important'>
         <div class='container'>
             <div id="menu-secondary" class="menu-container menu-secondary" role="navigation">
@@ -154,73 +155,234 @@
 
 </header>
 
-        <div class="main-content">
-            <div class="current-tag-container">
-                <h2 class="title">
-                    标签：#mem
-                </h2>
-            </div>
-        </div>
-    <div id="main" class="main" role="main">
-  <h1 class="screen-reader-text">Posts</h1>
-  
-  <div id="loop-container" class="loop-container">
-    <div class="post type-post status-publish format-standard   has-post-thumbnail hentry category-design tag-memories
-    tag-normal-post tag-standard-2 excerpt zoom full-without-featured
-      
-      even
-       excerpt">
-      
-      <a class="featured-image-link" href="https://cafra.github.io/post/mem/">
-        <div class='featured-image lazy lazy-bg-image' data-background="https://cafra.github.io//post-images/mem.png"></div>
-      </a>
-      
-      <div class="excerpt-container">
-        <div class="excerpt-meta">
-          <span class="date">  · 2019-04-20 ·</span> <span> / </span>
+
+  <div id="main" class="main" role="main">
+    <div id="loop-container" class="loop-container">
+      <div class="post type-post status-publish format-standard has-post-thumbnail hentry category-design tag-design tag-standard-2 tag-tagalicious tag-travel entry full-without-featured odd excerpt-1">
+        
+
+        <div class="entry-meta">
+          <span class="date">· 2020-05-05 ·</span> <span> / </span>
           <span class="author">
-              <a href="https://cafra.github.io/" title="Posts by  cafra" rel="author"> cafra</a>
+            <a href="https://cafra.github.io/" title="" rel="author"> Blog <a href="https://www.cnblogs.com/cz-blog/" target="_blank">Linux Kernel</a></a>
           </span>
-            
-                <span> / </span>
-                <span class="category">
-                        <a href="https://cafra.github.io/tag/wDrrz-W6s/">mem</a>
-                </span>
-            
-
+          
         </div>
-        <div class='excerpt-header'>
-          <h2 class='excerpt-title'>
-            <a href="https://cafra.github.io/post/mem/"> 工程管理硕士开始备考点滴 </a>
-          </h2>
+        <div class='entry-header'>
+          <h1 class='entry-title'>redis 数据类型</h1>
         </div>
-        <div class='excerpt-content'>
-          <article>
-              <p>👏  终于下定决心<strong>考研</strong>了！<br>
-✍️  <strong>考研</strong></p>
-<pre><code> 大学时为了媳妇和孩子，放弃了考研；
- 现在每天除了工作、加班；其他时间都是备考和健身；
- 在孩子美好的童年，媳妇最美的时光，不能陪伴他们，希望当我获得北航MEM后，可以多陪陪家人；
+        <div class="entry-container">
+          <div class="entry-content">
+            <article>
+              <p>数据类型：</p>
+<table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>名字</th>
+<th>编码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>list</td>
+<td>列表</td>
+<td>ziplist 、linkedlist</td>
+</tr>
+<tr>
+<td>hash</td>
+<td>哈希表</td>
+<td>ziplist、hashmap</td>
+</tr>
+<tr>
+<td>string</td>
+<td>字符串</td>
+<td>SDS</td>
+</tr>
+<tr>
+<td>set</td>
+<td>集合</td>
+<td>IntSet</td>
+</tr>
+<tr>
+<td>sorted set</td>
+<td>有序集合</td>
+<td>skiplist</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>SDS = simple dynamic string 简单动态字符串；string类型<br>
+<img src="https://cafra.github.io//post-images/1588669765666.png" alt="" loading="lazy"></li>
+<li>双向链表：list类型
+<ol>
+<li>即可用作栈，也可以做队列；</li>
+<li>包含head tail 指针，list 长度；</li>
+<li>void * 万能指针，实现多台；<br>
+<img src="https://cafra.github.io//post-images/1588670020175.png" alt="" loading="lazy"></li>
+</ol>
+</li>
+<li>字典：Hash 类型，set 集合
+<ol>
+<li>数据结构<br>
+<img src="https://cafra.github.io//post-images/1588684312574.png" alt="" loading="lazy"></li>
+<li>哈希算法：
+<h1 id="使用字典设置的哈希函数计算键-key-的哈希值">使用字典设置的哈希函数，计算键 key 的哈希值</h1>
+hash = dict-&gt;type-&gt;hashFunction(key);
+<h1 id="使用哈希表的-sizemask-属性和哈希值计算出索引值">使用哈希表的 sizemask 属性和哈希值，计算出索引值</h1>
+<h1 id="根据情况不同-htx-可以是-ht0-或者-ht1">根据情况不同， ht[x] 可以是 ht[0] 或者 ht[1]</h1>
+index = hash &amp; dict-&gt;ht[x].sizemask;<br>
+当字典被用作数据库的底层实现， 或者哈希键的底层实现时， Redis 使用 MurmurHash2 算法来计算键的哈希值。MurmurHash 算法目前的最新版本为 MurmurHash3 ；</li>
+</ol>
+</li>
+<li>跳跃表：sortedset 有序集合类型，性能和红黑树类似
+<ol>
+<li>链表加多级索引的结构，就是跳表, 实现二分查找；所以时间复杂度logN;</li>
+<li>索引数量是a1=n/2 ,an=2,q=1/2 所以，Sn=(a1-anq)/1-q=n-1 ,即空间复杂度O(n)；</li>
+<li>有序链表，插入需要查找，所以O(logN)；删除O(logN)</li>
+</ol>
+</li>
+<li>整数集合；set 类型；
+<ol>
+<li>有序数组，整数集合是集合键的底层实现之一。</li>
+<li>整数集合的底层实现为数组， 这个数组以有序、无重复的方式保存集合元素， 在有需要时， 程序会根据新添加元素的类型， 改变这个数组的类型。</li>
+<li>升级操作为整数集合带来了操作上的灵活性， 并且尽可能地节约了内存。</li>
+<li>整数集合只支持升级操作， 不支持降级操作。</li>
+</ol>
+</li>
+<li>压缩列表（ziplist）；
+<ol>
+<li>是列表键和哈希键的底层实现之一；</li>
+</ol>
+</li>
+<li>对象：<br>
+<img src="https://cafra.github.io//post-images/1588689799373.png" alt="" loading="lazy">
+<ol>
+<li>Redis 数据库中的每个键值对的键和值都是一个对象。</li>
+<li>Redis 共有字符串、列表、哈希、集合、有序集合五种类型的对象， 每种类型的对象至少都有两种或以上的编码方式， 不同的编码可以在不同的使用场景上优化对象的使用效率。</li>
+<li>服务器在执行某些命令之前， 会先检查给定键的类型能否执行指定的命令， 而检查一个键的类型就是检查键的值对象的类型。</li>
+<li>Redis 的对象系统带有引用计数实现的内存回收机制， 当一个对象不再被使用时， 该对象所占用的内存就会被自动释放。</li>
+<li>Redis 会共享值为 0 到 9999 的字符串对象。</li>
+<li>对象会记录自己的最后一次被访问的时间， 这个时间可以用于计算对象的空转时间。</li>
+</ol>
+</li>
+<li>数据库：<br>
+1.</li>
+</ol>
+<!-- more -->
+<p>原始文章：<br>
+https://mp.weixin.qq.com/s?__biz=MzI5NzAzOTM4MQ==&amp;mid=2648093049&amp;idx=1&amp;sn=9274af76149189ba4f5e45cd55308f15&amp;chksm=f4993203c3eebb15b380b9ee314ed1e3b580ba5303208be5fc57c34fa86b27d99ae7b14fadb3#rd</p>
+<p>https://www.jianshu.com/p/c706d050d2f8</p>
 
-</code></pre>
-
-          </article>
+            </article>
+          </div>
+          <div class='entry-meta-bottom'>
+            <div class="entry-categories">
+              <p>
+                <span>Categories</span>
+                
+                  
+                    
+                  <a href="https://cafra.github.io/tag/FxAzZWDJ3/" title="View all posts in mysql">mysql</a>
+                    
+                    
+                    
+                  <a href="https://cafra.github.io/tag/KHvGWZJGK/" title="View all posts in 妮妮">妮妮</a>
+                    
+                    
+                    
+                  <a href="https://cafra.github.io/tag/veFDGox4D7/" title="View all posts in 幸福">幸福</a>
+                    
+                    
+                    
+                  <a href="https://cafra.github.io/tag/wDrrz-W6s/" title="View all posts in mem">mem</a>
+                    
+                    
+              </p>
+            </div>
+            <div class="entry-tags">
+              <p><span>Tags</span>
+              </p>
+            </div>
+          </div>
+          <div class="author-meta">
+            <div class="author">
+              <img alt='' src="https://cafra.github.io//images/avatar.png?v=1588692050333" class='avatar avatar-72 photo' height='72' width='72'>
+              <span>WRITTEN BY: &nbsp;&nbsp;&nbsp;<a href='https://cafra.github.io/'>陈贞</a> </span>
+            </div>
+            <div class="bio">
+              <p>个人博客</p>
+              
+                
+                  <a class="github" target="_blank"
+                     href="https://github.com/cafra">
+                    <i class="fab fa-github" title="github"></i>
+                  </a>
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+                  <a class="qq" target="_blank"
+                     href="http://wpa.qq.com/msgrd?v=3&amp;uin=2443591230&amp;site=qq&amp;menu=yes">
+                    <i class="fab fa-qq" title="qq"></i>
+                  </a>
+                
+              
+                
+              
+            </div>
+          </div>
         </div>
+          
+            <nav class="navigation pagination" role="navigation">
+              <h2 class="screen-reader-text">Posts navigation</h2>
+              <div class="nav-links">
+                <a class="next page-numbers" href="https://cafra.github.io/post/mysql-update-zhi-xing-guo-cheng/">下一篇->mysql update 执行过程</a>
+              </div>
+            </nav>
+          
       </div>
+      <section id="comments" class="comments">
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: 'c553500d9b1bd090eda2',
+    clientSecret: 'd52d21f4a032fbbeb69c21a28724754c56aa443a',
+    repo: 'cafra.github.io',
+    owner: 'cafra',
+    admin: ['cafra'],
+    id: location.pathname,      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+
+          
+        
+      </section>
     </div>
   </div>
-  
-</div>
-
-    <nav class="navigation pagination" role="navigation">
-    <h2 class="screen-reader-text">Posts navigation</h2>
-    <div class="nav-links">
-        
-        
-    </div>
-</nav>
-
-    <footer id="site-footer" class="site-footer" role="contentinfo">
+  <footer id="site-footer" class="site-footer" role="contentinfo">
     <h1>
         <a href="https://cafra.github.io/"> cafra </a>
     </h1>
@@ -278,3 +440,4 @@
 </div>
 </body>
 </html>
+

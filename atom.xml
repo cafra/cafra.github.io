@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://cafra.github.io/</id>
     <title>cafra</title>
-    <updated>2020-05-05T09:00:43.282Z</updated>
+    <updated>2020-05-05T15:20:56.194Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://cafra.github.io/"/>
     <link rel="self" href="https://cafra.github.io/atom.xml"/>
@@ -10,6 +10,209 @@
     <logo>https://cafra.github.io/images/avatar.png</logo>
     <icon>https://cafra.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, cafra</rights>
+    <entry>
+        <title type="html"><![CDATA[redis 数据类型]]></title>
+        <id>https://cafra.github.io/post/redis-shu-ju-lei-xing/</id>
+        <link href="https://cafra.github.io/post/redis-shu-ju-lei-xing/">
+        </link>
+        <updated>2020-05-05T09:03:43.000Z</updated>
+        <summary type="html"><![CDATA[<p>数据类型：</p>
+<table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>名字</th>
+<th>编码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>list</td>
+<td>列表</td>
+<td>ziplist 、linkedlist</td>
+</tr>
+<tr>
+<td>hash</td>
+<td>哈希表</td>
+<td>ziplist、hashmap</td>
+</tr>
+<tr>
+<td>string</td>
+<td>字符串</td>
+<td>SDS</td>
+</tr>
+<tr>
+<td>set</td>
+<td>集合</td>
+<td>IntSet</td>
+</tr>
+<tr>
+<td>sorted set</td>
+<td>有序集合</td>
+<td>skiplist</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>SDS = simple dynamic string 简单动态字符串；string类型<br>
+<img src="https://cafra.github.io//post-images/1588669765666.png" alt="" loading="lazy"></li>
+<li>双向链表：list类型
+<ol>
+<li>即可用作栈，也可以做队列；</li>
+<li>包含head tail 指针，list 长度；</li>
+<li>void * 万能指针，实现多台；<br>
+<img src="https://cafra.github.io//post-images/1588670020175.png" alt="" loading="lazy"></li>
+</ol>
+</li>
+<li>字典：Hash 类型，set 集合
+<ol>
+<li>数据结构<br>
+<img src="https://cafra.github.io//post-images/1588684312574.png" alt="" loading="lazy"></li>
+<li>哈希算法：
+<h1 id="使用字典设置的哈希函数计算键-key-的哈希值">使用字典设置的哈希函数，计算键 key 的哈希值</h1>
+hash = dict-&gt;type-&gt;hashFunction(key);
+<h1 id="使用哈希表的-sizemask-属性和哈希值计算出索引值">使用哈希表的 sizemask 属性和哈希值，计算出索引值</h1>
+<h1 id="根据情况不同-htx-可以是-ht0-或者-ht1">根据情况不同， ht[x] 可以是 ht[0] 或者 ht[1]</h1>
+index = hash &amp; dict-&gt;ht[x].sizemask;<br>
+当字典被用作数据库的底层实现， 或者哈希键的底层实现时， Redis 使用 MurmurHash2 算法来计算键的哈希值。MurmurHash 算法目前的最新版本为 MurmurHash3 ；</li>
+</ol>
+</li>
+<li>跳跃表：sortedset 有序集合类型，性能和红黑树类似
+<ol>
+<li>链表加多级索引的结构，就是跳表, 实现二分查找；所以时间复杂度logN;</li>
+<li>索引数量是a1=n/2 ,an=2,q=1/2 所以，Sn=(a1-anq)/1-q=n-1 ,即空间复杂度O(n)；</li>
+<li>有序链表，插入需要查找，所以O(logN)；删除O(logN)</li>
+</ol>
+</li>
+<li>整数集合；set 类型；
+<ol>
+<li>有序数组，整数集合是集合键的底层实现之一。</li>
+<li>整数集合的底层实现为数组， 这个数组以有序、无重复的方式保存集合元素， 在有需要时， 程序会根据新添加元素的类型， 改变这个数组的类型。</li>
+<li>升级操作为整数集合带来了操作上的灵活性， 并且尽可能地节约了内存。</li>
+<li>整数集合只支持升级操作， 不支持降级操作。</li>
+</ol>
+</li>
+<li>压缩列表（ziplist）；
+<ol>
+<li>是列表键和哈希键的底层实现之一；</li>
+</ol>
+</li>
+<li>对象：<br>
+<img src="https://cafra.github.io//post-images/1588689799373.png" alt="" loading="lazy">
+<ol>
+<li>Redis 数据库中的每个键值对的键和值都是一个对象。</li>
+<li>Redis 共有字符串、列表、哈希、集合、有序集合五种类型的对象， 每种类型的对象至少都有两种或以上的编码方式， 不同的编码可以在不同的使用场景上优化对象的使用效率。</li>
+<li>服务器在执行某些命令之前， 会先检查给定键的类型能否执行指定的命令， 而检查一个键的类型就是检查键的值对象的类型。</li>
+<li>Redis 的对象系统带有引用计数实现的内存回收机制， 当一个对象不再被使用时， 该对象所占用的内存就会被自动释放。</li>
+<li>Redis 会共享值为 0 到 9999 的字符串对象。</li>
+<li>对象会记录自己的最后一次被访问的时间， 这个时间可以用于计算对象的空转时间。</li>
+</ol>
+</li>
+<li>数据库：<br>
+1.</li>
+</ol>
+]]></summary>
+        <content type="html"><![CDATA[<p>数据类型：</p>
+<table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>名字</th>
+<th>编码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>list</td>
+<td>列表</td>
+<td>ziplist 、linkedlist</td>
+</tr>
+<tr>
+<td>hash</td>
+<td>哈希表</td>
+<td>ziplist、hashmap</td>
+</tr>
+<tr>
+<td>string</td>
+<td>字符串</td>
+<td>SDS</td>
+</tr>
+<tr>
+<td>set</td>
+<td>集合</td>
+<td>IntSet</td>
+</tr>
+<tr>
+<td>sorted set</td>
+<td>有序集合</td>
+<td>skiplist</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>SDS = simple dynamic string 简单动态字符串；string类型<br>
+<img src="https://cafra.github.io//post-images/1588669765666.png" alt="" loading="lazy"></li>
+<li>双向链表：list类型
+<ol>
+<li>即可用作栈，也可以做队列；</li>
+<li>包含head tail 指针，list 长度；</li>
+<li>void * 万能指针，实现多台；<br>
+<img src="https://cafra.github.io//post-images/1588670020175.png" alt="" loading="lazy"></li>
+</ol>
+</li>
+<li>字典：Hash 类型，set 集合
+<ol>
+<li>数据结构<br>
+<img src="https://cafra.github.io//post-images/1588684312574.png" alt="" loading="lazy"></li>
+<li>哈希算法：
+<h1 id="使用字典设置的哈希函数计算键-key-的哈希值">使用字典设置的哈希函数，计算键 key 的哈希值</h1>
+hash = dict-&gt;type-&gt;hashFunction(key);
+<h1 id="使用哈希表的-sizemask-属性和哈希值计算出索引值">使用哈希表的 sizemask 属性和哈希值，计算出索引值</h1>
+<h1 id="根据情况不同-htx-可以是-ht0-或者-ht1">根据情况不同， ht[x] 可以是 ht[0] 或者 ht[1]</h1>
+index = hash &amp; dict-&gt;ht[x].sizemask;<br>
+当字典被用作数据库的底层实现， 或者哈希键的底层实现时， Redis 使用 MurmurHash2 算法来计算键的哈希值。MurmurHash 算法目前的最新版本为 MurmurHash3 ；</li>
+</ol>
+</li>
+<li>跳跃表：sortedset 有序集合类型，性能和红黑树类似
+<ol>
+<li>链表加多级索引的结构，就是跳表, 实现二分查找；所以时间复杂度logN;</li>
+<li>索引数量是a1=n/2 ,an=2,q=1/2 所以，Sn=(a1-anq)/1-q=n-1 ,即空间复杂度O(n)；</li>
+<li>有序链表，插入需要查找，所以O(logN)；删除O(logN)</li>
+</ol>
+</li>
+<li>整数集合；set 类型；
+<ol>
+<li>有序数组，整数集合是集合键的底层实现之一。</li>
+<li>整数集合的底层实现为数组， 这个数组以有序、无重复的方式保存集合元素， 在有需要时， 程序会根据新添加元素的类型， 改变这个数组的类型。</li>
+<li>升级操作为整数集合带来了操作上的灵活性， 并且尽可能地节约了内存。</li>
+<li>整数集合只支持升级操作， 不支持降级操作。</li>
+</ol>
+</li>
+<li>压缩列表（ziplist）；
+<ol>
+<li>是列表键和哈希键的底层实现之一；</li>
+</ol>
+</li>
+<li>对象：<br>
+<img src="https://cafra.github.io//post-images/1588689799373.png" alt="" loading="lazy">
+<ol>
+<li>Redis 数据库中的每个键值对的键和值都是一个对象。</li>
+<li>Redis 共有字符串、列表、哈希、集合、有序集合五种类型的对象， 每种类型的对象至少都有两种或以上的编码方式， 不同的编码可以在不同的使用场景上优化对象的使用效率。</li>
+<li>服务器在执行某些命令之前， 会先检查给定键的类型能否执行指定的命令， 而检查一个键的类型就是检查键的值对象的类型。</li>
+<li>Redis 的对象系统带有引用计数实现的内存回收机制， 当一个对象不再被使用时， 该对象所占用的内存就会被自动释放。</li>
+<li>Redis 会共享值为 0 到 9999 的字符串对象。</li>
+<li>对象会记录自己的最后一次被访问的时间， 这个时间可以用于计算对象的空转时间。</li>
+</ol>
+</li>
+<li>数据库：<br>
+1.</li>
+</ol>
+<!-- more -->
+<p>原始文章：<br>
+https://mp.weixin.qq.com/s?__biz=MzI5NzAzOTM4MQ==&amp;mid=2648093049&amp;idx=1&amp;sn=9274af76149189ba4f5e45cd55308f15&amp;chksm=f4993203c3eebb15b380b9ee314ed1e3b580ba5303208be5fc57c34fa86b27d99ae7b14fadb3#rd</p>
+<p>https://www.jianshu.com/p/c706d050d2f8</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[mysql update 执行过程]]></title>
         <id>https://cafra.github.io/post/mysql-update-zhi-xing-guo-cheng/</id>
