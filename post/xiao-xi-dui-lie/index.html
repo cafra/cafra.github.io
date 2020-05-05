@@ -1,11 +1,11 @@
 <html>
 <head>
-    <meta charset="utf-8" />
+  <meta charset="utf-8" />
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="robots" content="all,follow">
 <meta name="googlebot" content="index,follow,snippet,archive">
-<title>编码类型 | cafra</title>
+<title>消息队列 | cafra</title>
 <link rel="shortcut icon" href="https://cafra.github.io//favicon.ico?v=1588694795729">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cafra.github.io//styles/main.css" type='text/css' media='all'>
@@ -29,7 +29,8 @@
 </head>
 <body class="home blog ct-body standard">
 <div id="overflow-container" class="overflow-container">
-    <header id="site-header" class="site-header" role="banner">
+  <a class="skip-content" href="#main">Skip to content</a>
+  <header id="site-header" class="site-header" role="banner">
     <div class='top-navigation top-navigation-important'>
         <div class='container'>
             <div id="menu-secondary" class="menu-container menu-secondary" role="navigation">
@@ -154,113 +155,191 @@
 
 </header>
 
-        <div class="main-content">
-            <div class="current-tag-container">
-                <h2 class="title">
-                    标签：#编码类型
-                </h2>
-            </div>
-        </div>
-    <div id="main" class="main" role="main">
-  <h1 class="screen-reader-text">Posts</h1>
-  
-  <div id="loop-container" class="loop-container">
-    <div class="post type-post status-publish format-standard   has-post-thumbnail hentry category-design tag-memories
-    tag-normal-post tag-standard-2 excerpt zoom full-without-featured
-      
-      even
-       excerpt">
-      
-      <a class="featured-image-link" href="https://cafra.github.io/post/redis-shu-ju-lei-xing/">
-        <div class='featured-image lazy lazy-bg-image' data-background="https://cafra.github.io//post-images/redis-shu-ju-lei-xing.png"></div>
-      </a>
-      
-      <div class="excerpt-container">
-        <div class="excerpt-meta">
-          <span class="date">  · 2020-05-05 ·</span> <span> / </span>
-          <span class="author">
-              <a href="https://cafra.github.io/" title="Posts by  cafra" rel="author"> cafra</a>
-          </span>
-            
-                <span> / </span>
-                <span class="category">
-                        <a href="https://cafra.github.io/tag/hKMfefaE3/">redis</a>
-                </span>
-            
-                <span> / </span>
-                <span class="category">
-                        <a href="https://cafra.github.io/tag/F89V9rO0vc/">数据类型</a>
-                </span>
-            
-                <span> / </span>
-                <span class="category">
-                        <a href="https://cafra.github.io/tag/zilxOaBfPF/">编码类型</a>
-                </span>
-            
 
+  <div id="main" class="main" role="main">
+    <div id="loop-container" class="loop-container">
+      <div class="post type-post status-publish format-standard has-post-thumbnail hentry category-design tag-design tag-standard-2 tag-tagalicious tag-travel entry full-without-featured odd excerpt-1">
+        
+
+        <div class="entry-meta">
+          <span class="date">· 2020-05-05 ·</span> <span> / </span>
+          <span class="author">
+            <a href="https://cafra.github.io/" title="" rel="author"> Blog <a href="https://www.cnblogs.com/cz-blog/" target="_blank">Linux Kernel</a></a>
+          </span>
+          
         </div>
-        <div class='excerpt-header'>
-          <h2 class='excerpt-title'>
-            <a href="https://cafra.github.io/post/redis-shu-ju-lei-xing/"> redis 数据类型 </a>
-          </h2>
+        <div class='entry-header'>
+          <h1 class='entry-title'>消息队列</h1>
         </div>
-        <div class='excerpt-content'>
-          <article>
-              <p>数据类型：</p>
+        <div class="entry-container">
+          <div class="entry-content">
+            <article>
+              <ol>
+<li>
+<p>消息队列概述</p>
+</li>
+<li>
+<p>组成</p>
+</li>
+<li>
+<p>作用</p>
+</li>
+<li>
+<p>应用场景：</p>
+<ol>
+<li>异步解耦</li>
+<li>削峰</li>
+<li>顺序保证</li>
+<li>缓冲</li>
+</ol>
+</li>
+<li>
+<p>协议</p>
+</li>
+<li>
+<p>常见中间件</p>
 <table>
 <thead>
 <tr>
-<th>数据类型</th>
 <th>名字</th>
-<th>编码</th>
+<th>特点</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>list</td>
-<td>列表</td>
-<td>ziplist 、linkedlist</td>
+<td>kafka</td>
+<td>高吞吐、持久化、partition 有序，多broker 备份，写hash 保证多patition 有序,单机并发10w/s</td>
 </tr>
 <tr>
-<td>hash</td>
-<td>哈希表</td>
-<td>ziplist、hashmap</td>
+<td>nsq</td>
+<td>内存，高吞吐，不保证顺序，没有备份机制</td>
 </tr>
 <tr>
-<td>string</td>
-<td>字符串</td>
-<td>SDS</td>
+<td>rocket MQ</td>
+<td>并发w/s，支持事务，仅支持java</td>
 </tr>
 <tr>
-<td>set</td>
-<td>集合</td>
-<td>IntSet</td>
+<td>rabitMQ</td>
+<td>并发w/s，支持事务，支持多语言，标准消息队列协议，通用性好</td>
 </tr>
 <tr>
-<td>sorted set</td>
-<td>有序集合</td>
-<td>skiplist</td>
+<td>redis</td>
+<td>高吞吐，没有组概念</td>
 </tr>
 </tbody>
 </table>
+</li>
+</ol>
 
-          </article>
+            </article>
+          </div>
+          <div class='entry-meta-bottom'>
+            <div class="entry-categories">
+              <p>
+                <span>Categories</span>
+                
+                  
+                    
+                  <a href="https://cafra.github.io/tag/FxAzZWDJ3/" title="View all posts in mysql">mysql</a>
+                    
+                    
+                    
+                  <a href="https://cafra.github.io/tag/KHvGWZJGK/" title="View all posts in 妮妮">妮妮</a>
+                    
+                    
+                    
+                  <a href="https://cafra.github.io/tag/veFDGox4D7/" title="View all posts in 幸福">幸福</a>
+                    
+                    
+                    
+                  <a href="https://cafra.github.io/tag/wDrrz-W6s/" title="View all posts in mem">mem</a>
+                    
+                    
+              </p>
+            </div>
+            <div class="entry-tags">
+              <p><span>Tags</span>
+              </p>
+            </div>
+          </div>
+          <div class="author-meta">
+            <div class="author">
+              <img alt='' src="https://cafra.github.io//images/avatar.png?v=1588694795729" class='avatar avatar-72 photo' height='72' width='72'>
+              <span>WRITTEN BY: &nbsp;&nbsp;&nbsp;<a href='https://cafra.github.io/'>陈贞</a> </span>
+            </div>
+            <div class="bio">
+              <p>个人博客</p>
+              
+                
+                  <a class="github" target="_blank"
+                     href="https://github.com/cafra">
+                    <i class="fab fa-github" title="github"></i>
+                  </a>
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+                  <a class="qq" target="_blank"
+                     href="http://wpa.qq.com/msgrd?v=3&amp;uin=2443591230&amp;site=qq&amp;menu=yes">
+                    <i class="fab fa-qq" title="qq"></i>
+                  </a>
+                
+              
+                
+              
+            </div>
+          </div>
         </div>
+          
+            <nav class="navigation pagination" role="navigation">
+              <h2 class="screen-reader-text">Posts navigation</h2>
+              <div class="nav-links">
+                <a class="next page-numbers" href="https://cafra.github.io/post/mysql-update-zhi-xing-guo-cheng/">下一篇->mysql update 执行过程</a>
+              </div>
+            </nav>
+          
       </div>
+      <section id="comments" class="comments">
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: 'c553500d9b1bd090eda2',
+    clientSecret: 'd52d21f4a032fbbeb69c21a28724754c56aa443a',
+    repo: 'cafra.github.io',
+    owner: 'cafra',
+    admin: ['cafra'],
+    id: location.pathname,      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+
+          
+        
+      </section>
     </div>
   </div>
-  
-</div>
-
-    <nav class="navigation pagination" role="navigation">
-    <h2 class="screen-reader-text">Posts navigation</h2>
-    <div class="nav-links">
-        
-        
-    </div>
-</nav>
-
-    <footer id="site-footer" class="site-footer" role="contentinfo">
+  <footer id="site-footer" class="site-footer" role="contentinfo">
     <h1>
         <a href="https://cafra.github.io/"> cafra </a>
     </h1>
@@ -318,3 +397,4 @@
 </div>
 </body>
 </html>
+

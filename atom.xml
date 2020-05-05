@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://cafra.github.io/</id>
     <title>cafra</title>
-    <updated>2020-05-05T15:52:21.167Z</updated>
+    <updated>2020-05-05T16:06:45.389Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://cafra.github.io/"/>
     <link rel="self" href="https://cafra.github.io/atom.xml"/>
@@ -10,6 +10,70 @@
     <logo>https://cafra.github.io/images/avatar.png</logo>
     <icon>https://cafra.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, cafra</rights>
+    <entry>
+        <title type="html"><![CDATA[消息队列]]></title>
+        <id>https://cafra.github.io/post/xiao-xi-dui-lie/</id>
+        <link href="https://cafra.github.io/post/xiao-xi-dui-lie/">
+        </link>
+        <updated>2020-05-05T15:52:25.000Z</updated>
+        <content type="html"><![CDATA[<ol>
+<li>
+<p>消息队列概述</p>
+</li>
+<li>
+<p>组成</p>
+</li>
+<li>
+<p>作用</p>
+</li>
+<li>
+<p>应用场景：</p>
+<ol>
+<li>异步解耦</li>
+<li>削峰</li>
+<li>顺序保证</li>
+<li>缓冲</li>
+</ol>
+</li>
+<li>
+<p>协议</p>
+</li>
+<li>
+<p>常见中间件</p>
+<table>
+<thead>
+<tr>
+<th>名字</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>kafka</td>
+<td>高吞吐、持久化、partition 有序，多broker 备份，写hash 保证多patition 有序,单机并发10w/s</td>
+</tr>
+<tr>
+<td>nsq</td>
+<td>内存，高吞吐，不保证顺序，没有备份机制</td>
+</tr>
+<tr>
+<td>rocket MQ</td>
+<td>并发w/s，支持事务，仅支持java</td>
+</tr>
+<tr>
+<td>rabitMQ</td>
+<td>并发w/s，支持事务，支持多语言，标准消息队列协议，通用性好</td>
+</tr>
+<tr>
+<td>redis</td>
+<td>高吞吐，没有组概念</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ol>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[mysql update 执行过程]]></title>
         <id>https://cafra.github.io/post/mysql-update-zhi-xing-guo-cheng/</id>
