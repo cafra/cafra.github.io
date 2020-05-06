@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://cafra.github.io/</id>
     <title>cafra</title>
-    <updated>2020-05-06T00:48:21.766Z</updated>
+    <updated>2020-05-06T01:09:48.106Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://cafra.github.io/"/>
     <link rel="self" href="https://cafra.github.io/atom.xml"/>
@@ -10,6 +10,32 @@
     <logo>https://cafra.github.io/images/avatar.png</logo>
     <icon>https://cafra.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, cafra</rights>
+    <entry>
+        <title type="html"><![CDATA[ID生成器的原理]]></title>
+        <id>https://cafra.github.io/post/id-sheng-cheng-qi-de-yuan-li/</id>
+        <link href="https://cafra.github.io/post/id-sheng-cheng-qi-de-yuan-li/">
+        </link>
+        <updated>2020-05-06T00:49:16.000Z</updated>
+        <content type="html"><![CDATA[<p>高效生成趋势有序的全局唯一ID，兼顾有序性、高性能、可扩展<br>
+SnowFlake原理:</p>
+<ol>
+<li>64位的整型;</li>
+<li>1位：标识部分;</li>
+<li>41位：时间戳部分，这个是毫秒级的时间，一般实现上不会存储当前的时间戳，而是时间戳的差值; 2^41 /年毫秒数=69年</li>
+<li>10位：节点部分，前5位作为数据中心标识，后5位作为机器标识，可以部署1024个节点；根据实际情况设置；</li>
+<li>12位：序列号部分，支持同一毫秒内同一个节点可以生成4096个ID；</li>
+<li>生成的ID,可以通过转62进制，准换成字母数字的10位长字符串；</li>
+</ol>
+<p>UUID：</p>
+<ol>
+<li>可以在本地产生全局唯一的ID,但不能保证递增，不适合数据主键；</li>
+</ol>
+<p>数据库自增主键：</p>
+<ol>
+<li>可以保证递增。但是无法封库分表；</li>
+</ol>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[消息队列]]></title>
         <id>https://cafra.github.io/post/xiao-xi-dui-lie/</id>
