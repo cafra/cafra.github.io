@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://cafra.github.io/</id>
     <title>cafra</title>
-    <updated>2020-05-06T01:21:20.233Z</updated>
+    <updated>2020-05-06T02:12:35.964Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://cafra.github.io/"/>
     <link rel="self" href="https://cafra.github.io/atom.xml"/>
@@ -32,7 +32,8 @@ SnowFlake原理:</p>
 </ol>
 <p>数据库自增主键：</p>
 <ol>
-<li>可以保证递增。但是无法封库分表；</li>
+<li>可以保证递增。但是无法分库分表；</li>
+<li>即使修改步长，进行分库，也不方便集群伸缩；</li>
 </ol>
 ]]></content>
     </entry>
