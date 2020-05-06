@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://cafra.github.io/</id>
     <title>cafra</title>
-    <updated>2020-05-06T02:12:35.964Z</updated>
+    <updated>2020-05-06T05:37:42.997Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://cafra.github.io/"/>
     <link rel="self" href="https://cafra.github.io/atom.xml"/>
@@ -98,7 +98,16 @@ SnowFlake原理:</p>
 </tbody>
 </table>
 </li>
+<li>
+<p>消息队列的最终一致性：</p>
+<ol>
+<li>使用带有事务的消息队列；</li>
+<li>仿照思路：预写，确认，发送，预写check 的思路，实现一个；</li>
 </ol>
+</li>
+</ol>
+<p>参考文章：<br>
+https://juejin.im/post/5d8882bdf265da03c9273821</p>
 ]]></content>
     </entry>
     <entry>
