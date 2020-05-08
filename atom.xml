@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://cafra.github.io/</id>
     <title>cafra</title>
-    <updated>2020-05-08T01:00:18.598Z</updated>
+    <updated>2020-05-08T13:46:53.961Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://cafra.github.io/"/>
     <link rel="self" href="https://cafra.github.io/atom.xml"/>
@@ -18,6 +18,7 @@
         <updated>2020-05-08T00:59:37.000Z</updated>
         <content type="html"><![CDATA[<ul>
 <li>多链路调用超时控制</li>
+<li>多routine 超时控制</li>
 </ul>
 ]]></content>
     </entry>
@@ -171,6 +172,76 @@ func waitForSignal() {
 	signal.Notify(sigs, syscall.SIGTSTP)
 	signal.Notify(sigs, syscall.SIGQUIT)
 	&lt;-sigs
+}
+
+</code></pre>
+<ul>
+<li>context 传递参数 和取消</li>
+</ul>
+<pre><code class="language-go">package main
+
+import (
+	&quot;context&quot;
+	&quot;crypto/md5&quot;
+	&quot;fmt&quot;
+	&quot;io/ioutil&quot;
+	&quot;net/http&quot;
+	&quot;sync&quot;
+	&quot;time&quot;
+)
+
+const CtxUrlKey = &quot;url&quot;
+
+func main() {
+	addrs := []string{
+		&quot;https://baidu.com&quot;,
+		&quot;https://www.cmcm.com&quot;,
+	}
+
+	ctx, _ := context.WithTimeout(context.TODO(), 3*time.Second)
+	var wg sync.WaitGroup
+
+	for _, addr := range addrs {
+		wg.Add(1)
+
+		go GetUrl(context.WithValue(ctx, CtxUrlKey, addr), &amp;wg)
+	}
+
+	wg.Wait()
+
+	fmt.Println(&quot;main exit&quot;)
+}
+
+/**
+ * ctx 传递参数和超时通知
+ *
+ * param: context.Context ctx
+ * param: *sync.WaitGroup wg
+ */
+func GetUrl(ctx context.Context, wg *sync.WaitGroup) {
+	defer wg.Done()
+	url := ctx.Value(CtxUrlKey).(string)
+	for {
+		select {
+		case &lt;-ctx.Done():
+			fmt.Printf(&quot;url=%v exit\n&quot;, url)
+			return
+		default:
+			rsp, err := http.Get(url)
+			if err != nil {
+				fmt.Printf(&quot;get url=%v err=%v\n&quot;, url, err)
+				break
+			}
+
+			bs, err := ioutil.ReadAll(rsp.Body)
+			if err != nil {
+				fmt.Printf(&quot;ReadAll url=%v body err=%v\n&quot;, url, err)
+				return
+			}
+			rsp.Body.Close()
+			fmt.Printf(&quot;get url rsp md5=%x\n&quot;, md5.Sum(bs))
+		}
+	}
 }
 
 </code></pre>
