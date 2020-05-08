@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="robots" content="all,follow">
 <meta name="googlebot" content="index,follow,snippet,archive">
-<title>mysql update 执行过程 | cafra</title>
-<link rel="shortcut icon" href="https://cafra.github.io//favicon.ico?v=1588743456416">
+<title>mysql 原理 | cafra</title>
+<link rel="shortcut icon" href="https://cafra.github.io//favicon.ico?v=1588899609283">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cafra.github.io//styles/main.css" type='text/css' media='all'>
 
@@ -192,12 +192,13 @@
           
         </div>
         <div class='entry-header'>
-          <h1 class='entry-title'>mysql update 执行过程</h1>
+          <h1 class='entry-title'>mysql 原理</h1>
         </div>
         <div class="entry-container">
           <div class="entry-content">
             <article>
-              <!-- more -->
+              <h1> update 执行过程 </h1>
+<!-- more -->
 <figure data-type="image" tabindex="1"><img src="https://cafra.github.io//post-images/1588647116759.png" alt="" loading="lazy"></figure>
 <p>事务提交2个阶段如何保证一致性；或者说是如何恢复的？<br>
 crash 重启后：</p>
@@ -213,6 +214,7 @@ crash 重启后：</p>
 <li>repeatable read= rr     ；B session 提交，不影响A 的数据；但可能幻读（增删）</li>
 <li>serializable 串行          ；不存在：赃读、不可重复读、幻读问题；效率最低</li>
 </ol>
+<h1> 索引相关 </h1>
 <p>数据一致性：</p>
 <ol>
 <li>数据库4个特性：原子性，一致性，隔离性、持久性</li>
@@ -268,6 +270,8 @@ crash 重启后：</p>
 </tr>
 </tbody>
 </table>
+<h1> 数据库事务原理 </h1>
+<h1> 数据库锁原理 </h1>
 
             </article>
           </div>
@@ -314,7 +318,7 @@ crash 重启后：</p>
           </div>
           <div class="author-meta">
             <div class="author">
-              <img alt='' src="https://cafra.github.io//images/avatar.png?v=1588743456416" class='avatar avatar-72 photo' height='72' width='72'>
+              <img alt='' src="https://cafra.github.io//images/avatar.png?v=1588899609283" class='avatar avatar-72 photo' height='72' width='72'>
               <span>WRITTEN BY: &nbsp;&nbsp;&nbsp;<a href='https://cafra.github.io/'>陈贞</a> </span>
             </div>
             <div class="bio">

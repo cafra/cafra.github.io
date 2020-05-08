@@ -1,11 +1,11 @@
 <html>
 <head>
-    <meta charset="utf-8" />
+  <meta charset="utf-8" />
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="robots" content="all,follow">
 <meta name="googlebot" content="index,follow,snippet,archive">
-<title>幸福 | cafra</title>
+<title>语言系列-Golang | cafra</title>
 <link rel="shortcut icon" href="https://cafra.github.io//favicon.ico?v=1588899609283">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cafra.github.io//styles/main.css" type='text/css' media='all'>
@@ -29,7 +29,8 @@
 </head>
 <body class="home blog ct-body standard">
 <div id="overflow-container" class="overflow-container">
-    <header id="site-header" class="site-header" role="banner">
+  <a class="skip-content" href="#main">Skip to content</a>
+  <header id="site-header" class="site-header" role="banner">
     <div class='top-navigation top-navigation-important'>
         <div class='container'>
             <div id="menu-secondary" class="menu-container menu-secondary" role="navigation">
@@ -172,71 +173,301 @@
 
 </header>
 
-        <div class="main-content">
-            <div class="current-tag-container">
-                <h2 class="title">
-                    标签：#幸福
-                </h2>
-            </div>
-        </div>
-    <div id="main" class="main" role="main">
-  <h1 class="screen-reader-text">Posts</h1>
-  
-  <div id="loop-container" class="loop-container">
-    <div class="post type-post status-publish format-standard   has-post-thumbnail hentry category-design tag-memories
-    tag-normal-post tag-standard-2 excerpt zoom full-without-featured
-      
-      even
-       excerpt">
-      
-      <a class="featured-image-link" href="https://cafra.github.io/post/xing-fu-de-cheng-chang/">
-        <div class='featured-image lazy lazy-bg-image' data-background="https://cafra.github.io//post-images/xing-fu-de-cheng-chang.png"></div>
-      </a>
-      
-      <div class="excerpt-container">
-        <div class="excerpt-meta">
-          <span class="date">  · 2020-03-29 ·</span> <span> / </span>
-          <span class="author">
-              <a href="https://cafra.github.io/" title="Posts by  cafra" rel="author"> cafra</a>
-          </span>
-            
-                <span> / </span>
-                <span class="category">
-                        <a href="https://cafra.github.io/tag/KHvGWZJGK/">妮妮</a>
-                </span>
-            
-                <span> / </span>
-                <span class="category">
-                        <a href="https://cafra.github.io/tag/veFDGox4D7/">幸福</a>
-                </span>
-            
 
+  <div id="main" class="main" role="main">
+    <div id="loop-container" class="loop-container">
+      <div class="post type-post status-publish format-standard has-post-thumbnail hentry category-design tag-design tag-standard-2 tag-tagalicious tag-travel entry full-without-featured odd excerpt-1">
+        
+
+        <div class="entry-meta">
+          <span class="date">· 2020-05-07 ·</span> <span> / </span>
+          <span class="author">
+            <a href="https://cafra.github.io/" title="" rel="author"> Blog <a href="https://www.cnblogs.com/cz-blog/" target="_blank">Linux Kernel</a></a>
+          </span>
+          
         </div>
-        <div class='excerpt-header'>
-          <h2 class='excerpt-title'>
-            <a href="https://cafra.github.io/post/xing-fu-de-cheng-chang/"> 幸福的成长 </a>
-          </h2>
+        <div class='entry-header'>
+          <h1 class='entry-title'>语言系列-Golang</h1>
         </div>
-        <div class='excerpt-content'>
-          <article>
+        <div class="entry-container">
+          <div class="entry-content">
+            <article>
+              <h1 id="pprof-原理">pprof 原理</h1>
+<ul>
+<li>取样
+<ul>
+<li>让操作系统把计时器抽象出来，给程序发SIGALRM信号，然后由用户层去处理计时器取样</li>
+</ul>
+</li>
+<li>统计
+<ul>
+<li>对栈帧进行取样，获取函数调用的链路；</li>
+</ul>
+</li>
+</ul>
+<h1 id="goroutine-并发控制">goroutine 并发控制</h1>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>优点</th>
+<th>缺点</th>
+<th>使用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>全局共享变量(cas)</td>
+<td>简单</td>
+<td>无法安全退出</td>
+<td>状态机</td>
+</tr>
+<tr>
+<td>channel+waitgroup</td>
+<td>简单，可以安全退出</td>
+<td></td>
+<td>运行框架控制</td>
+</tr>
+<tr>
+<td>context+waitgroup</td>
+<td>强并发控制 goroutine 间通信，结合了Mutex锁(需要保证goroutine并发安全)和channel而实现的</td>
+<td></td>
+<td>并发通信</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>共享变量示例代码</li>
+</ul>
+<pre><code class="language-go">package main
+
+import (
+	&quot;fmt&quot;
+	&quot;sync/atomic&quot;
+	&quot;time&quot;
+)
+
+const (
+	EStatusStop = iota
+	EStatusRun
+)
+
+var (
+	Status int32 = EStatusRun
+)
+
+func main() {
+	go func() {
+		for i := 0; i &lt; 10; i++ {
+			go echo(i)
+		}
+	}()
+
+	time.Sleep(5 * time.Second)
+	atomic.StoreInt32(&amp;Status, EStatusStop)
+
+	time.Sleep(time.Second)
+	fmt.Println(&quot;main exit&quot;)
+}
+
+func echo(id int) {
+	for {
+		fmt.Printf(&quot;Id=%v say hello\n&quot;, id)
+		time.Sleep(time.Second)
+		if EStatusStop == atomic.LoadInt32(&amp;Status) {
+			fmt.Printf(&quot;Id=%v exit\n&quot;, id)
+			return
+		}
+	}
+}
+
+</code></pre>
+<ul>
+<li>channel +waitgroup</li>
+</ul>
+<pre><code class="language-go">package main
+
+import (
+	&quot;fmt&quot;
+	&quot;os&quot;
+	&quot;os/signal&quot;
+	&quot;sync&quot;
+	&quot;syscall&quot;
+	&quot;time&quot;
+)
+
+func main() {
+	stop := make(chan bool)
+	var wg sync.WaitGroup
+
+	for i := 0; i &lt; 3; i++ {
+		wg.Add(1)
+		go func(id int, c chan bool) {
+			defer wg.Done()
+			consumer(id, c)
+		}(i, stop)
+	}
+	waitForSignal()
+	// close channel,all receiver can get close signal
+	close(stop)
+	wg.Wait()
+	fmt.Println(&quot;main exit&quot;)
+}
+
+// &lt;-chan ：chan 输出，对应调用者是输入
+// chan&lt;- : chan 输入，对应调用者是输出
+func consumer(id int, stop &lt;-chan bool) {
+	for {
+		select {
+		case &lt;-stop:
+			fmt.Printf(&quot;id=%v comsumer stop\n&quot;, id)
+			return
+		default:
+			fmt.Printf(&quot;Id=%v hello world\n&quot;, id)
+			time.Sleep(time.Second)
+		}
+	}
+}
+
+func waitForSignal() {
+	sigs := make(chan os.Signal)
+	signal.Notify(sigs, os.Interrupt)
+	signal.Notify(sigs, syscall.SIGTERM)
+	signal.Notify(sigs, syscall.SIGTSTP)
+	signal.Notify(sigs, syscall.SIGQUIT)
+	&lt;-sigs
+}
+
+</code></pre>
+<h1 id="channel-原理">channel 原理</h1>
+<h1 id="waitgroup的原理">WaitGroup的原理</h1>
+<h2 id="参考链接">参考链接：</h2>
+<ul>
+<li>并发 https://blog.csdn.net/u013029603/article/details/81232395</li>
+<li>grpc context 超时控制 https://blog.csdn.net/u013029603/article/details/81232395</li>
+</ul>
+
+            </article>
+          </div>
+          <div class='entry-meta-bottom'>
+            <div class="entry-categories">
+              <p>
+                <span>Categories</span>
+                
+                  
+                    
+                  <a href="https://cafra.github.io/tag/hKMfefaE3/" title="View all posts in redis">redis</a>
+                    
+                    
+                    
+                  <a href="https://cafra.github.io/tag/F89V9rO0vc/" title="View all posts in 数据类型">数据类型</a>
+                    
+                    
+                    
+                  <a href="https://cafra.github.io/tag/zilxOaBfPF/" title="View all posts in 编码类型">编码类型</a>
+                    
+                    
+                    
+                  <a href="https://cafra.github.io/tag/FxAzZWDJ3/" title="View all posts in mysql">mysql</a>
+                    
+                    
+                    
+                  <a href="https://cafra.github.io/tag/KHvGWZJGK/" title="View all posts in 妮妮">妮妮</a>
+                    
+                    
+                    
+                  <a href="https://cafra.github.io/tag/veFDGox4D7/" title="View all posts in 幸福">幸福</a>
+                    
+                    
+                    
+                  <a href="https://cafra.github.io/tag/wDrrz-W6s/" title="View all posts in mem">mem</a>
+                    
+                    
+              </p>
+            </div>
+            <div class="entry-tags">
+              <p><span>Tags</span>
+              </p>
+            </div>
+          </div>
+          <div class="author-meta">
+            <div class="author">
+              <img alt='' src="https://cafra.github.io//images/avatar.png?v=1588899609283" class='avatar avatar-72 photo' height='72' width='72'>
+              <span>WRITTEN BY: &nbsp;&nbsp;&nbsp;<a href='https://cafra.github.io/'>陈贞</a> </span>
+            </div>
+            <div class="bio">
+              <p>个人博客</p>
               
-          </article>
+                
+                  <a class="github" target="_blank"
+                     href="https://github.com/cafra">
+                    <i class="fab fa-github" title="github"></i>
+                  </a>
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+                  <a class="qq" target="_blank"
+                     href="http://wpa.qq.com/msgrd?v=3&amp;uin=2443591230&amp;site=qq&amp;menu=yes">
+                    <i class="fab fa-qq" title="qq"></i>
+                  </a>
+                
+              
+                
+              
+            </div>
+          </div>
         </div>
+          
+            <nav class="navigation pagination" role="navigation">
+              <h2 class="screen-reader-text">Posts navigation</h2>
+              <div class="nav-links">
+                <a class="next page-numbers" href="https://cafra.github.io/post/web-kuang-jia-xiang-guan/">下一篇->web 框架相关</a>
+              </div>
+            </nav>
+          
       </div>
+      <section id="comments" class="comments">
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: 'c553500d9b1bd090eda2',
+    clientSecret: 'd52d21f4a032fbbeb69c21a28724754c56aa443a',
+    repo: 'cafra.github.io',
+    owner: 'cafra',
+    admin: ['cafra'],
+    id: location.pathname,      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+
+          
+        
+      </section>
     </div>
   </div>
-  
-</div>
-
-    <nav class="navigation pagination" role="navigation">
-    <h2 class="screen-reader-text">Posts navigation</h2>
-    <div class="nav-links">
-        
-        
-    </div>
-</nav>
-
-    <footer id="site-footer" class="site-footer" role="contentinfo">
+  <footer id="site-footer" class="site-footer" role="contentinfo">
     <h1>
         <a href="https://cafra.github.io/"> cafra </a>
     </h1>
@@ -294,3 +525,4 @@
 </div>
 </body>
 </html>
+

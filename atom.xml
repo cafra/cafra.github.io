@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://cafra.github.io/</id>
     <title>cafra</title>
-    <updated>2020-05-06T05:37:42.997Z</updated>
+    <updated>2020-05-08T01:00:18.598Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://cafra.github.io/"/>
     <link rel="self" href="https://cafra.github.io/atom.xml"/>
@@ -10,6 +10,188 @@
     <logo>https://cafra.github.io/images/avatar.png</logo>
     <icon>https://cafra.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, cafra</rights>
+    <entry>
+        <title type="html"><![CDATA[context 使用、原理、遇到问题]]></title>
+        <id>https://cafra.github.io/post/context-shi-yong-yuan-li-yu-dao-wen-ti/</id>
+        <link href="https://cafra.github.io/post/context-shi-yong-yuan-li-yu-dao-wen-ti/">
+        </link>
+        <updated>2020-05-08T00:59:37.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>多链路调用超时控制</li>
+</ul>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[语言系列-Golang]]></title>
+        <id>https://cafra.github.io/post/yu-yan-xi-lie-golang/</id>
+        <link href="https://cafra.github.io/post/yu-yan-xi-lie-golang/">
+        </link>
+        <updated>2020-05-07T13:44:35.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="pprof-原理">pprof 原理</h1>
+<ul>
+<li>取样
+<ul>
+<li>让操作系统把计时器抽象出来，给程序发SIGALRM信号，然后由用户层去处理计时器取样</li>
+</ul>
+</li>
+<li>统计
+<ul>
+<li>对栈帧进行取样，获取函数调用的链路；</li>
+</ul>
+</li>
+</ul>
+<h1 id="goroutine-并发控制">goroutine 并发控制</h1>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>优点</th>
+<th>缺点</th>
+<th>使用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>全局共享变量(cas)</td>
+<td>简单</td>
+<td>无法安全退出</td>
+<td>状态机</td>
+</tr>
+<tr>
+<td>channel+waitgroup</td>
+<td>简单，可以安全退出</td>
+<td></td>
+<td>运行框架控制</td>
+</tr>
+<tr>
+<td>context+waitgroup</td>
+<td>强并发控制 goroutine 间通信，结合了Mutex锁(需要保证goroutine并发安全)和channel而实现的</td>
+<td></td>
+<td>并发通信</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>共享变量示例代码</li>
+</ul>
+<pre><code class="language-go">package main
+
+import (
+	&quot;fmt&quot;
+	&quot;sync/atomic&quot;
+	&quot;time&quot;
+)
+
+const (
+	EStatusStop = iota
+	EStatusRun
+)
+
+var (
+	Status int32 = EStatusRun
+)
+
+func main() {
+	go func() {
+		for i := 0; i &lt; 10; i++ {
+			go echo(i)
+		}
+	}()
+
+	time.Sleep(5 * time.Second)
+	atomic.StoreInt32(&amp;Status, EStatusStop)
+
+	time.Sleep(time.Second)
+	fmt.Println(&quot;main exit&quot;)
+}
+
+func echo(id int) {
+	for {
+		fmt.Printf(&quot;Id=%v say hello\n&quot;, id)
+		time.Sleep(time.Second)
+		if EStatusStop == atomic.LoadInt32(&amp;Status) {
+			fmt.Printf(&quot;Id=%v exit\n&quot;, id)
+			return
+		}
+	}
+}
+
+</code></pre>
+<ul>
+<li>channel +waitgroup</li>
+</ul>
+<pre><code class="language-go">package main
+
+import (
+	&quot;fmt&quot;
+	&quot;os&quot;
+	&quot;os/signal&quot;
+	&quot;sync&quot;
+	&quot;syscall&quot;
+	&quot;time&quot;
+)
+
+func main() {
+	stop := make(chan bool)
+	var wg sync.WaitGroup
+
+	for i := 0; i &lt; 3; i++ {
+		wg.Add(1)
+		go func(id int, c chan bool) {
+			defer wg.Done()
+			consumer(id, c)
+		}(i, stop)
+	}
+	waitForSignal()
+	// close channel,all receiver can get close signal
+	close(stop)
+	wg.Wait()
+	fmt.Println(&quot;main exit&quot;)
+}
+
+// &lt;-chan ：chan 输出，对应调用者是输入
+// chan&lt;- : chan 输入，对应调用者是输出
+func consumer(id int, stop &lt;-chan bool) {
+	for {
+		select {
+		case &lt;-stop:
+			fmt.Printf(&quot;id=%v comsumer stop\n&quot;, id)
+			return
+		default:
+			fmt.Printf(&quot;Id=%v hello world\n&quot;, id)
+			time.Sleep(time.Second)
+		}
+	}
+}
+
+func waitForSignal() {
+	sigs := make(chan os.Signal)
+	signal.Notify(sigs, os.Interrupt)
+	signal.Notify(sigs, syscall.SIGTERM)
+	signal.Notify(sigs, syscall.SIGTSTP)
+	signal.Notify(sigs, syscall.SIGQUIT)
+	&lt;-sigs
+}
+
+</code></pre>
+<h1 id="channel-原理">channel 原理</h1>
+<h1 id="waitgroup的原理">WaitGroup的原理</h1>
+<h2 id="参考链接">参考链接：</h2>
+<ul>
+<li>并发 https://blog.csdn.net/u013029603/article/details/81232395</li>
+<li>grpc context 超时控制 https://blog.csdn.net/u013029603/article/details/81232395</li>
+</ul>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[web 框架相关]]></title>
+        <id>https://cafra.github.io/post/web-kuang-jia-xiang-guan/</id>
+        <link href="https://cafra.github.io/post/web-kuang-jia-xiang-guan/">
+        </link>
+        <updated>2020-05-07T05:41:34.000Z</updated>
+        <content type="html"><![CDATA[<h1> gin 源码 </h1>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[ID生成器的原理]]></title>
         <id>https://cafra.github.io/post/id-sheng-cheng-qi-de-yuan-li/</id>
@@ -104,6 +286,9 @@ SnowFlake原理:</p>
 <li>使用带有事务的消息队列；</li>
 <li>仿照思路：预写，确认，发送，预写check 的思路，实现一个；</li>
 </ol>
+</li>
+<li>
+<p>kafka 文件存储原理：todo</p>
 </li>
 </ol>
 <p>参考文章：<br>
@@ -257,12 +442,14 @@ https://mp.weixin.qq.com/s?__biz=MzI5NzAzOTM4MQ==&amp;mid=2648093049&amp;idx=1&a
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[mysql update 执行过程]]></title>
+        <title type="html"><![CDATA[mysql 原理]]></title>
         <id>https://cafra.github.io/post/mysql-update-zhi-xing-guo-cheng/</id>
         <link href="https://cafra.github.io/post/mysql-update-zhi-xing-guo-cheng/">
         </link>
         <updated>2020-05-05T02:50:53.000Z</updated>
-        <content type="html"><![CDATA[<!-- more -->
+        <summary type="html"><![CDATA[<h1> update 执行过程 </h1>]]></summary>
+        <content type="html"><![CDATA[<h1> update 执行过程 </h1>
+<!-- more -->
 <figure data-type="image" tabindex="1"><img src="https://cafra.github.io//post-images/1588647116759.png" alt="" loading="lazy"></figure>
 <p>事务提交2个阶段如何保证一致性；或者说是如何恢复的？<br>
 crash 重启后：</p>
@@ -278,6 +465,7 @@ crash 重启后：</p>
 <li>repeatable read= rr     ；B session 提交，不影响A 的数据；但可能幻读（增删）</li>
 <li>serializable 串行          ；不存在：赃读、不可重复读、幻读问题；效率最低</li>
 </ol>
+<h1> 索引相关 </h1>
 <p>数据一致性：</p>
 <ol>
 <li>数据库4个特性：原子性，一致性，隔离性、持久性</li>
@@ -333,6 +521,8 @@ crash 重启后：</p>
 </tr>
 </tbody>
 </table>
+<h1> 数据库事务原理 </h1>
+<h1> 数据库锁原理 </h1>
 ]]></content>
     </entry>
     <entry>
@@ -422,16 +612,6 @@ crash 重启后：</p>
 <p>提前面试准备 https://github.com/cafra/mem</p>
 <p><a href="https://github.com/cafra">Github</a><br>
 <a href="https://www.cnblogs.com/cz-blog/">博客</a></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[关于]]></title>
-        <id>https://cafra.github.io/post/about/</id>
-        <link href="https://cafra.github.io/post/about/">
-        </link>
-        <updated>2019-01-25T11:09:48.000Z</updated>
-        <content type="html"><![CDATA[<p>个人简历</p>
-<figure data-type="image" tabindex="1"><img src="https://cafra.github.io//post-images/1585409903268.png" alt="" loading="lazy"></figure>
 ]]></content>
     </entry>
 </feed>
