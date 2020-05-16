@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://cafra.github.io/</id>
     <title>cafra</title>
-    <updated>2020-05-12T16:03:33.613Z</updated>
+    <updated>2020-05-16T12:54:51.817Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://cafra.github.io/"/>
     <link rel="self" href="https://cafra.github.io/atom.xml"/>
@@ -10,6 +10,13 @@
     <logo>https://cafra.github.io/images/avatar.png</logo>
     <icon>https://cafra.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, cafra</rights>
+    <entry>
+        <title type="html"><![CDATA[系统设计]]></title>
+        <id>https://cafra.github.io/post/xi-tong-she-ji/</id>
+        <link href="https://cafra.github.io/post/xi-tong-she-ji/">
+        </link>
+        <updated>2020-05-13T15:19:50.000Z</updated>
+    </entry>
     <entry>
         <title type="html"><![CDATA[语言系列-Golang并发控制原理]]></title>
         <id>https://cafra.github.io/post/yu-yan-xi-lie-golang/</id>
@@ -122,13 +129,15 @@
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[mysql 原理]]></title>
+        <title type="html"><![CDATA[mysql 应用和原理]]></title>
         <id>https://cafra.github.io/post/mysql-update-zhi-xing-guo-cheng/</id>
         <link href="https://cafra.github.io/post/mysql-update-zhi-xing-guo-cheng/">
         </link>
         <updated>2020-05-05T02:50:53.000Z</updated>
-        <summary type="html"><![CDATA[<h1> update 执行过程 </h1>]]></summary>
-        <content type="html"><![CDATA[<h1> update 执行过程 </h1>]]></content>
+        <summary type="html"><![CDATA[<h1 id="update-执行过程">update 执行过程</h1>
+]]></summary>
+        <content type="html"><![CDATA[<h1 id="update-执行过程">update 执行过程</h1>
+]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[幸福的成长]]></title>
@@ -166,12 +175,5 @@
 
 </code></pre>
 ]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[关于]]></title>
-        <id>https://cafra.github.io/post/about/</id>
-        <link href="https://cafra.github.io/post/about/">
-        </link>
-        <updated>2019-01-25T11:09:48.000Z</updated>
     </entry>
 </feed>

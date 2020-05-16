@@ -6,7 +6,7 @@
 <meta name="robots" content="all,follow">
 <meta name="googlebot" content="index,follow,snippet,archive">
 <title>web 框架相关 | cafra</title>
-<link rel="shortcut icon" href="https://cafra.github.io//favicon.ico?v=1589299406909">
+<link rel="shortcut icon" href="https://cafra.github.io//favicon.ico?v=1589633680990">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cafra.github.io//styles/main.css" type='text/css' media='all'>
 
@@ -192,18 +192,20 @@
         <div class="entry-container">
           <div class="entry-content">
             <article>
-              <h1> gin 源码 </h1>
-<h1 id="gin-实现了-httpservehttpresponsewriter-request-接口">gin 实现了 http.ServeHTTP(ResponseWriter, *Request) 接口；</h1>
-<h1 id="engine-context">engine context</h1>
-<pre><code>- 获取context；pool 较少gc压力；
-- 获取标准库request，包括：uri,method;
-- 路由匹配：engine.methodTrees 前缀树的匹配查找；
-    - 找到HandlersChain
-    - 解析请求参数
-- 遍历执行HandlersChain；
-- response 写入header;
-</code></pre>
+              <h1 id="gin-源码">gin 源码</h1>
+<h2 id="gin-实现了-httpservehttpresponsewriter-request-接口">gin 实现了 http.ServeHTTP(ResponseWriter, *Request) 接口；</h2>
+<h2 id="engine-context">engine context</h2>
 <ul>
+<li>获取context；pool 较少gc压力；</li>
+<li>获取标准库request，包括：uri,method;</li>
+<li>路由匹配：engine.methodTrees 前缀树的匹配查找；
+<ul>
+<li>找到HandlersChain</li>
+<li>解析请求参数</li>
+</ul>
+</li>
+<li>遍历执行HandlersChain；</li>
+<li>response 写入header;</li>
 <li>render :根据request accept 协商render，渲染最终返回的格式数据；
 <ul>
 <li>html</li>
@@ -216,13 +218,13 @@
 </ul>
 </li>
 </ul>
-<h1 id="httplistenandserve-tcp-server">http.ListenAndServe  TCP server</h1>
+<h2 id="httplistenandserve-tcp-server">http.ListenAndServe  TCP server</h2>
 <ul>
 <li>onceListener</li>
 <li>Accept</li>
 <li>goroutine serve
 <ul>
-<li>panic</li>
+<li>panic recover</li>
 <li>tls</li>
 <li>read:bufioReaderPool</li>
 <li>ServeHTTP</li>
@@ -231,10 +233,486 @@
 </ul>
 </li>
 </ul>
-<h1 id="路由功能">路由功能</h1>
-<pre><code>- 路由前缀树（基树）:空间换时间，提高路由性能，支持模糊匹配
-</code></pre>
+<h2 id="路由功能">路由功能</h2>
+<ul>
+<li>路由前缀树（基树）:空间换时间，提高路由性能，支持模糊匹配</li>
+</ul>
 <p>详细说明：https://en.wikipedia.org/wiki/Radix_tree</p>
+<hr>
+<h1 id="go-micro-源码分析">go-micro 源码分析</h1>
+<h2 id="代码启动流程">代码启动流程</h2>
+<ul>
+<li>
+<p>新建服务</p>
+<ul>
+<li>客户端初始化：auth、trace等</li>
+<li>服务端初始化：auth、trace、Stats 等</li>
+</ul>
+</li>
+<li>
+<p>初始化</p>
+<ul>
+<li>初始化配置</li>
+<li>加载插件</li>
+<li>设置应用名字</li>
+<li>初始化cmd 的全部组件: 命令行配置</li>
+</ul>
+</li>
+<li>
+<p>注册服务</p>
+<ul>
+<li>Pb 代码注册handler: context.Context, *XXXRequest, *XXXResponse</li>
+</ul>
+</li>
+<li>
+<p>启动</p>
+<ul>
+<li>产生一个auth account
+<ul>
+<li>根据id、secret</li>
+<li>获得account</li>
+<li>生成 token</li>
+<li>独立协程
+<ul>
+<li>定时任务</li>
+<li>过期刷新</li>
+<li>更新client token</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>注册默认handler
+<ul>
+<li>DefaultLog</li>
+<li>DefaultStats</li>
+<li>DefaultTracer</li>
+</ul>
+</li>
+<li>启动Profile</li>
+<li>启动Server,和指定的启动函数，以grpc 为例
+<ul>
+<li>net.Listener</li>
+<li>Listen</li>
+<li>启动broker</li>
+<li>注册服务</li>
+<li>启动服务：和net 的tcp 是一样的</li>
+<li>定时刷新注册</li>
+<li>系统退出时
+<ul>
+<li>卸载服务</li>
+<li>等待sub 停止</li>
+<li>优雅退出</li>
+<li>disconnect broker</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="option-方式提高扩展行">option 方式，提高扩展行</h2>
+<ul>
+<li>options struct 声明</li>
+<li>option func(*options)</li>
+<li>newOption(...option) 初始化：默认值、ops 修改</li>
+</ul>
+<h2 id="全部组件抽象-interface">全部组件抽象 interface</h2>
+<ul>
+<li>Service</li>
+<li>Client</li>
+<li>Server</li>
+<li>Auth</li>
+<li>Borker</li>
+<li>Cmd</li>
+<li>Config</li>
+<li>Store</li>
+<li>Runtime</li>
+<li>Transport</li>
+<li>Profile</li>
+<li>Tracer</li>
+<li>Cmd</li>
+<li>Registry</li>
+<li>Selector</li>
+</ul>
+<pre><code class="language-go">  // and initialising services.
+type Service interface {
+	// The service name
+	Name() string
+	// Init initialises options
+	Init(...Option)
+	// Options returns the current options
+	Options() Options
+	// Client is used to call services
+	Client() client.Client
+	// Server is for handling requests and events
+	Server() server.Server
+	// Run the service
+	Run() error
+	// The service implementation
+	String() string
+}
+
+// Client is the interface used to make requests to services.
+// It supports Request/Response via Transport and Publishing via the Broker.
+// It also supports bidirectional streaming of requests.
+type Client interface {
+	Init(...Option) error
+	Options() Options
+	NewMessage(topic string, msg interface{}, opts ...MessageOption) Message
+	NewRequest(service, endpoint string, req interface{}, reqOpts ...RequestOption) Request
+	Call(ctx context.Context, req Request, rsp interface{}, opts ...CallOption) error
+	Stream(ctx context.Context, req Request, opts ...CallOption) (Stream, error)
+	Publish(ctx context.Context, msg Message, opts ...PublishOption) error
+	String() string
+}
+
+// Server is a simple micro server abstraction
+type Server interface {
+	// Initialise options
+	Init(...Option) error
+	// Retrieve the options
+	Options() Options
+	// Register a handler
+	Handle(Handler) error
+	// Create a new handler
+	NewHandler(interface{}, ...HandlerOption) Handler
+	// Create a new subscriber
+	NewSubscriber(string, interface{}, ...SubscriberOption) Subscriber
+	// Register a subscriber
+	Subscribe(Subscriber) error
+	// Start the server
+	Start() error
+	// Stop the server
+	Stop() error
+	// Server implementation
+	String() string
+}
+
+// Auth providers authentication and authorization
+type Auth interface {
+	// Init the auth
+	Init(opts ...Option)
+	// Options set for auth
+	Options() Options
+	// Generate a new account
+	Generate(id string, opts ...GenerateOption) (*Account, error)
+	// Grant access to a resource
+	Grant(role string, res *Resource) error
+	// Revoke access to a resource
+	Revoke(role string, res *Resource) error
+	// Verify an account has access to a resource
+	Verify(acc *Account, res *Resource) error
+	// Inspect a token
+	Inspect(token string) (*Account, error)
+	// Token generated using refresh token
+	Token(opts ...TokenOption) (*Token, error)
+	// String returns the name of the implementation
+	String() string
+}
+
+// Broker is an interface used for asynchronous messaging.
+type Broker interface {
+	Init(...Option) error
+	Options() Options
+	Address() string
+	Connect() error
+	Disconnect() error
+	Publish(topic string, m *Message, opts ...PublishOption) error
+	Subscribe(topic string, h Handler, opts ...SubscribeOption) (Subscriber, error)
+	String() string
+}
+
+type Cmd interface {
+	// The cli app within this cmd
+	App() *cli.App
+	// Adds options, parses flags and initialise
+	// exits on error
+	Init(opts ...Option) error
+	// Options set within this command
+	Options() Options
+}
+
+type Config interface {
+	// provide the reader.Values interface
+	reader.Values
+	// Init the config
+	Init(opts ...Option) error
+	// Options in the config
+	Options() Options
+	// Stop the config loader/watcher
+	Close() error
+	// Load config sources
+	Load(source ...source.Source) error
+	// Force a source changeset sync
+	Sync() error
+	// Watch a value for changes
+	Watch(path ...string) (Watcher, error)
+}
+
+// Store is a data storage interface
+type Store interface {
+	// Init initialises the store. It must perform any required setup on the backing storage implementation and check that it is ready for use, returning any errors.
+	Init(...Option) error
+	// Options allows you to view the current options.
+	Options() Options
+	// Read takes a single key name and optional ReadOptions. It returns matching []*Record or an error.
+	Read(key string, opts ...ReadOption) ([]*Record, error)
+	// Write() writes a record to the store, and returns an error if the record was not written.
+	Write(r *Record, opts ...WriteOption) error
+	// Delete removes the record with the corresponding key from the store.
+	Delete(key string, opts ...DeleteOption) error
+	// List returns any keys that match, or an empty list with no error if none matched.
+	List(opts ...ListOption) ([]string, error)
+	// Close the store
+	Close() error
+	// String returns the name of the implementation.
+	String() string
+}
+
+type Registry interface {
+	Init(...Option) error
+	Options() Options
+	Register(*Service, ...RegisterOption) error
+	Deregister(*Service, ...DeregisterOption) error
+	GetService(string, ...GetOption) ([]*Service, error)
+	ListServices(...ListOption) ([]*Service, error)
+	Watch(...WatchOption) (Watcher, error)
+	String() string
+}
+
+
+// Runtime is a service runtime manager
+type Runtime interface {
+	// Init initializes runtime
+	Init(...Option) error
+	// Create registers a service
+	Create(*Service, ...CreateOption) error
+	// Read returns the service
+	Read(...ReadOption) ([]*Service, error)
+	// Update the service in place
+	Update(*Service, ...UpdateOption) error
+	// Remove a service
+	Delete(*Service, ...DeleteOption) error
+	// Logs returns the logs for a service
+	Logs(*Service, ...LogsOption) (LogStream, error)
+	// Start starts the runtime
+	Start() error
+	// Stop shuts down the runtime
+	Stop() error
+	// String describes runtime
+	String() string
+}
+
+// Transport is an interface which is used for communication between
+// services. It uses connection based socket send/recv semantics and
+// has various implementations; http, grpc, quic.
+type Transport interface {
+	Init(...Option) error
+	Options() Options
+	Dial(addr string, opts ...DialOption) (Client, error)
+	Listen(addr string, opts ...ListenOption) (Listener, error)
+	String() string
+}
+
+type Profile interface {
+	// Start the profiler
+	Start() error
+	// Stop the profiler
+	Stop() error
+	// Name of the profiler
+	String() string
+}
+
+// Tracer is an interface for distributed tracing
+type Tracer interface {
+	// Start a trace
+	Start(ctx context.Context, name string) (context.Context, *Span)
+	// Finish the trace
+	Finish(*Span) error
+	// Read the traces
+	Read(...ReadOption) ([]*Span, error)
+}
+
+// Handler interface represents a request handler. It's generated
+// by passing any type of public concrete object with endpoints into server.NewHandler.
+// Most will pass in a struct.
+//
+// Example:
+//
+//      type Greeter struct {}
+//
+//      func (g *Greeter) Hello(context, request, response) error {
+//              return nil
+//      }
+//
+type Handler interface {
+	Name() string
+	Handler() interface{}
+	Endpoints() []*registry.Endpoint
+	Options() HandlerOptions
+}
+
+type Cmd interface {
+	// The cli app within this cmd
+	App() *cli.App
+	// Adds options, parses flags and initialise
+	// exits on error
+	Init(opts ...Option) error
+	// Options set within this command
+	Options() Options
+}
+
+// Selector builds on the registry as a mechanism to pick nodes
+// and mark their status. This allows host pools and other things
+// to be built using various algorithms.
+type Selector interface {
+	Init(opts ...Option) error
+	Options() Options
+	// Select returns a function which should return the next node
+	Select(service string, opts ...SelectOption) (Next, error)
+	// Mark sets the success/error against a node
+	Mark(service string, node *registry.Node, err error)
+	// Reset returns state back to zero for a service
+	Reset(service string)
+	// Close renders the selector unusable
+	Close() error
+	// Name of the selector
+	String() string
+
+
+</code></pre>
+<h2 id="装饰器模式包装器">装饰器模式（包装器）</h2>
+<h3 id="wrapper-嵌入修饰对象接口和特性的接口然后实现对修饰对象和特性对象的联合">Wrapper 嵌入修饰对象接口，和特性的接口，然后实现对修饰对象和特性对象的联合</h3>
+<ul>
+<li>traceWrapper 实现对client 的追踪</li>
+<li>authWrapper  实现对client 的鉴权</li>
+<li>fromServiceWrapper 实现服务调用者名字设置</li>
+<li>WrapHandler  func(HandlerFunc) HandlerFunc</li>
+</ul>
+<pre><code class="language-go">
+// TraceCall is a call tracing wrapper
+func TraceCall(name string, t trace.Tracer, c client.Client) client.Client {
+	return &amp;traceWrapper{
+		name:   name,
+		trace:  t,
+		Client: c,
+	}
+}
+
+type traceWrapper struct {
+	client.Client
+
+	name  string
+	trace trace.Tracer
+}
+
+func (c *traceWrapper) Call(ctx context.Context, req client.Request, rsp interface{}, opts ...client.CallOption) error {
+	newCtx, s := c.trace.Start(ctx, req.Service()+&quot;.&quot;+req.Endpoint())
+
+	s.Type = trace.SpanTypeRequestOutbound
+	err := c.Client.Call(newCtx, req, rsp, opts...)
+	if err != nil {
+		s.Metadata[&quot;error&quot;] = err.Error()
+	}
+
+	// finish the trace
+	c.trace.Finish(s)
+
+	return err
+}
+
+
+
+
+type authWrapper struct {
+	client.Client
+	auth func() auth.Auth
+}
+
+func (a *authWrapper) Call(ctx context.Context, req client.Request, rsp interface{}, opts ...client.CallOption) error {
+	// parse the options
+	var options client.CallOptions
+	for _, o := range opts {
+		o(&amp;options)
+	}
+
+	// check to see if the authorization header has already been set.
+	// We dont't override the header unless the ServiceToken option has
+	// been specified or the header wasn't provided
+	if _, ok := metadata.Get(ctx, &quot;Authorization&quot;); ok &amp;&amp; !options.ServiceToken {
+		return a.Client.Call(ctx, req, rsp, opts...)
+	}
+
+	// if auth is nil we won't be able to get an access token, so we execute
+	// the request without one.
+	aa := a.auth()
+	if aa == nil {
+		return a.Client.Call(ctx, req, rsp, opts...)
+	}
+
+	// check to see if we have a valid access token
+	aaOpts := aa.Options()
+	if aaOpts.Token != nil &amp;&amp; aaOpts.Token.Expiry.Unix() &gt; time.Now().Unix() {
+		ctx = metadata.Set(ctx, &quot;Authorization&quot;, auth.BearerScheme+aaOpts.Token.AccessToken)
+		return a.Client.Call(ctx, req, rsp, opts...)
+	}
+
+	// call without an auth token
+	return a.Client.Call(ctx, req, rsp, opts...)
+}
+
+</code></pre>
+<h2 id="插件模式-插拔式">插件模式-插拔式</h2>
+<h3 id="目的">目的</h3>
+<ul>
+<li>可以热更新式扩展应用程序的功能列表</li>
+<li>应对多变的业务需求，方便功能上下线</li>
+<li>对于任意的go应用，能进行增量架构、代码分发以及代码上下线</li>
+</ul>
+<pre><code class="language-go">    Brokers    map[string]func(...broker.Option) broker.Broker
+	Configs    map[string]func(...config.Option) (config.Config, error)
+	Clients    map[string]func(...client.Option) client.Client
+	Registries map[string]func(...registry.Option) registry.Registry
+	Selectors  map[string]func(...selector.Option) selector.Selector
+	Servers    map[string]func(...server.Option) server.Server
+	Transports map[string]func(...transport.Option) transport.Transport
+	Runtimes   map[string]func(...runtime.Option) runtime.Runtime
+	Stores     map[string]func(...store.Option) store.Store
+	Tracers    map[string]func(...trace.Option) trace.Tracer
+	Auths      map[string]func(...auth.Option) auth.Auth
+	Profiles   map[string]func(...profile.Option) profile.Profile
+</code></pre>
+<pre><code class="language-go">package main
+
+func Add(x, y int) int {
+	return x + y
+}
+func Subtract(x, y int) int {
+	return x - y
+}
+//go build -buildmode=plugin -o aplugin.so aplugin.go
+
+
+package main
+
+import (
+	&quot;fmt&quot;
+	&quot;plugin&quot;
+)
+
+func main() {
+	p, _ := plugin.Open(&quot;./aplugin.so&quot;)
+
+	add, _ := p.Lookup(&quot;Add&quot;)
+	subtract, _ := p.Lookup(&quot;Subtract&quot;)
+
+	sum := add.(func(int, int) int)(11, 2)
+	fmt.Println(&quot;sum=&quot;, sum)
+
+	sub := subtract.(func(int, int) int)(11, 2)
+	fmt.Println(&quot;sum=&quot;, sub)
+}
+</code></pre>
 
             </article>
           </div>
@@ -281,7 +759,7 @@
           </div>
           <div class="author-meta">
             <div class="author">
-              <img alt='' src="https://cafra.github.io//images/avatar.png?v=1589299406909" class='avatar avatar-72 photo' height='72' width='72'>
+              <img alt='' src="https://cafra.github.io//images/avatar.png?v=1589633680990" class='avatar avatar-72 photo' height='72' width='72'>
               <span>WRITTEN BY: &nbsp;&nbsp;&nbsp;<a href='https://cafra.github.io/'>陈贞</a> </span>
             </div>
             <div class="bio">

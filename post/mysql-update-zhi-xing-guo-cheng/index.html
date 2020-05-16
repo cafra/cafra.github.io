@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="robots" content="all,follow">
 <meta name="googlebot" content="index,follow,snippet,archive">
-<title>mysql 原理 | cafra</title>
-<link rel="shortcut icon" href="https://cafra.github.io//favicon.ico?v=1589299406909">
+<title>mysql 应用和原理 | cafra</title>
+<link rel="shortcut icon" href="https://cafra.github.io//favicon.ico?v=1589633680990">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cafra.github.io//styles/main.css" type='text/css' media='all'>
 
@@ -192,47 +192,31 @@
           
         </div>
         <div class='entry-header'>
-          <h1 class='entry-title'>mysql 原理</h1>
+          <h1 class='entry-title'>mysql 应用和原理</h1>
         </div>
         <div class="entry-container">
           <div class="entry-content">
             <article>
-              <h1> update 执行过程 </h1>
+              <h1 id="update-执行过程">update 执行过程</h1>
 <!-- more -->
 <figure data-type="image" tabindex="1"><img src="https://cafra.github.io//post-images/1588647116759.png" alt="" loading="lazy"></figure>
-<p>事务提交2个阶段如何保证一致性；或者说是如何恢复的？<br>
-crash 重启后：</p>
+<h2 id="事务提交2个阶段如何保证一致性或者说是如何恢复的">事务提交2个阶段如何保证一致性；或者说是如何恢复的？</h2>
+<p>crash 重启后：</p>
 <ol>
 <li>代开redo log 和系统表空间文件IbdataN</li>
 <li>找到最新Checkpoint ，扫描redo log 即处于prepare 状态的redo log</li>
 <li>如果在bin log 存在记录，则commit ,否则rollback事务；</li>
 </ol>
-<p>事务隔离级别：</p>
+<h2 id="事务隔离级别">事务隔离级别：</h2>
 <ol>
 <li>read uncommited = ru ；B session 未提交，A可以读到；赃读</li>
 <li>read commited = rc    ；B session 提交后，A可以读到；</li>
 <li>repeatable read= rr     ；B session 提交，不影响A 的数据；但可能幻读（增删）</li>
 <li>serializable 串行          ；不存在：赃读、不可重复读、幻读问题；效率最低</li>
 </ol>
-<h1> 索引相关 </h1>
-<p>数据一致性：</p>
-<ol>
-<li>数据库4个特性：原子性，一致性，隔离性、持久性</li>
-<li>接口幂等方法：
-<ol>
-<li>数据库唯一索引；</li>
-<li>token 一次性机制；</li>
-<li>数据库悲观锁；</li>
-<li>数据库乐观锁；</li>
-<li>分布式锁：redis 、zookeeper，等</li>
-<li>接口参数幂等：source来源，seq序列号</li>
-<li>业务流程状态机；</li>
-<li>异步+幂等；</li>
-</ol>
-</li>
-</ol>
-<p>索引设计原则：</p>
-<ol>
+<h1 id="索引相关">索引相关</h1>
+<h2 id="索引设计原则">索引设计原则：</h2>
+<ul>
 <li>where group order，关联查询 列可以添加索引；</li>
 <li>索引要适当，否则影响cud 性能；</li>
 <li>在区分度高的字段建索引，否则没有效果，即过度索引；</li>
@@ -247,8 +231,8 @@ crash 重启后：</p>
 <li>like %xx 匹配，无法使用索引；</li>
 <li>or 导致索引失效；</li>
 <li>串列需要前缀索引，提高查询速度；</li>
-</ol>
-<p>联合索引及其使用：</p>
+</ul>
+<h2 id="联合索引及其使用">联合索引及其使用：</h2>
 <ol>
 <li>最左原则；注意索引顺序；</li>
 </ol>
@@ -270,6 +254,28 @@ crash 重启后：</p>
 </tr>
 </tbody>
 </table>
+<h1 id="数据库4个特性">数据库4个特性：</h1>
+<ul>
+<li>原子性 Atomicity</li>
+<li>一致性 Consistency</li>
+<li>隔离性 Consistency</li>
+<li>持久性 Durability</li>
+</ul>
+<h2 id="数据一致性">数据一致性：</h2>
+<ol>
+<li>接口幂等方法：
+<ol>
+<li>数据库唯一索引；</li>
+<li>token 一次性机制；</li>
+<li>数据库悲观锁；</li>
+<li>数据库乐观锁；</li>
+<li>分布式锁：redis 、zookeeper，等</li>
+<li>接口参数幂等：source来源，seq序列号</li>
+<li>业务流程状态机；</li>
+<li>异步+幂等；</li>
+</ol>
+</li>
+</ol>
 <h1> 数据库事务原理 </h1>
 <h1> 数据库锁原理 </h1>
 
@@ -318,7 +324,7 @@ crash 重启后：</p>
           </div>
           <div class="author-meta">
             <div class="author">
-              <img alt='' src="https://cafra.github.io//images/avatar.png?v=1589299406909" class='avatar avatar-72 photo' height='72' width='72'>
+              <img alt='' src="https://cafra.github.io//images/avatar.png?v=1589633680990" class='avatar avatar-72 photo' height='72' width='72'>
               <span>WRITTEN BY: &nbsp;&nbsp;&nbsp;<a href='https://cafra.github.io/'>陈贞</a> </span>
             </div>
             <div class="bio">

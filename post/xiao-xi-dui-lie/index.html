@@ -6,7 +6,7 @@
 <meta name="robots" content="all,follow">
 <meta name="googlebot" content="index,follow,snippet,archive">
 <title>消息队列 | cafra</title>
-<link rel="shortcut icon" href="https://cafra.github.io//favicon.ico?v=1589299406909">
+<link rel="shortcut icon" href="https://cafra.github.io//favicon.ico?v=1589633680990">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cafra.github.io//styles/main.css" type='text/css' media='all'>
 
@@ -192,30 +192,17 @@
         <div class="entry-container">
           <div class="entry-content">
             <article>
-              <ol>
-<li>
-<p>消息队列概述</p>
-</li>
-<li>
-<p>组成</p>
-</li>
-<li>
-<p>作用</p>
-</li>
-<li>
-<p>应用场景：</p>
-<ol>
+              <h1 id="消息队列概述">消息队列概述</h1>
+<h1 id="组成">组成</h1>
+<h1 id="作用">作用</h1>
+<h1 id="应用场景">应用场景：</h1>
+<ul>
 <li>异步解耦</li>
 <li>削峰</li>
 <li>顺序保证</li>
 <li>缓冲</li>
-</ol>
-</li>
-<li>
-<p>协议</p>
-</li>
-<li>
-<p>常见中间件</p>
+</ul>
+<h1 id="常见中间件">常见中间件</h1>
 <table>
 <thead>
 <tr>
@@ -246,18 +233,57 @@
 </tr>
 </tbody>
 </table>
+<h1 id="生产者消息的可靠投递">生产者消息的可靠投递</h1>
+<h2 id="组成-2">组成</h2>
+<ul>
+<li>生产者 P</li>
+<li>消费者 C</li>
+<li>消息队列 M</li>
+<li>消息确认服务 MC</li>
+</ul>
+<h2 id="过程">过程</h2>
+<ul>
+<li>P submit MC ，消息prepare</li>
+<li>C 内部业务持久化操作</li>
+<li>C confirm MC , 消息撤销 /确认</li>
+<li>Mc 轮询P ，与P check 确认</li>
+</ul>
+<h1 id="消费者消息的可靠接收">消费者消息的可靠接收</h1>
+<ul>
+<li>C 消费结果确认机制</li>
+<li>Mc 轮询 C,与C  确认</li>
+</ul>
+<h1 id="kafka-文件存储原理">kafka 文件存储原理：</h1>
+<h2 id="partition-文件存储说明">partition 文件存储说明</h2>
+<ul>
+<li>目录规则： topic+partitionid</li>
+<li>存储文件：segment file组成和物理结构。数据分段
+<ul>
+<li>segment file组成：
+<ul>
+<li>index file：索引文件
+<ul>
+<li>提交文件查找效率</li>
+<li>减小索引文件占用的空间：offset-文件索引初始值=相对位置</li>
+</ul>
 </li>
-<li>
-<p>消息队列的最终一致性：</p>
-<ol>
-<li>使用带有事务的消息队列；</li>
-<li>仿照思路：预写，确认，发送，预写check 的思路，实现一个；</li>
-</ol>
+<li>data file：数据文件</li>
+<li>2个文件一一对应</li>
+<li>segment文件命名规则：partion全局的第一个segment从0开始，后续每个segment文件名为上一个segment文件最后一条消息的offset值。</li>
+<li>文件元数据映射关系：<br>
+<img src="https://cafra.github.io//post-images/1589627367841.png" alt="" loading="lazy"></li>
+<li>messge 结构<br>
+<img src="https://cafra.github.io//post-images/1589628305866.png" alt="" loading="lazy"></li>
+<li>通过offset查找message过程
+<ul>
+<li>offset 通过segment file 的文件名 二分查找到对应的index 文件</li>
+</ul>
 </li>
-<li>
-<p>kafka 文件存储原理：todo</p>
+</ul>
 </li>
-</ol>
+</ul>
+</li>
+</ul>
 <p>参考文章：<br>
 https://juejin.im/post/5d8882bdf265da03c9273821</p>
 
@@ -306,7 +332,7 @@ https://juejin.im/post/5d8882bdf265da03c9273821</p>
           </div>
           <div class="author-meta">
             <div class="author">
-              <img alt='' src="https://cafra.github.io//images/avatar.png?v=1589299406909" class='avatar avatar-72 photo' height='72' width='72'>
+              <img alt='' src="https://cafra.github.io//images/avatar.png?v=1589633680990" class='avatar avatar-72 photo' height='72' width='72'>
               <span>WRITTEN BY: &nbsp;&nbsp;&nbsp;<a href='https://cafra.github.io/'>陈贞</a> </span>
             </div>
             <div class="bio">
