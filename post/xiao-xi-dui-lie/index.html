@@ -6,7 +6,7 @@
 <meta name="robots" content="all,follow">
 <meta name="googlebot" content="index,follow,snippet,archive">
 <title>消息队列 | cafra</title>
-<link rel="shortcut icon" href="https://cafra.github.io//favicon.ico?v=1589696381441">
+<link rel="shortcut icon" href="https://cafra.github.io//favicon.ico?v=1589801197830">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cafra.github.io//styles/main.css" type='text/css' media='all'>
 
@@ -265,14 +265,20 @@
 <h2 id="partition-文件存储说明">partition 文件存储说明</h2>
 <ul>
 <li>目录规则： topic+partitionid</li>
-<li>存储文件：segment file组成和物理结构。数据分段
+<li>存储文件：segment file组成和物理结构。数据分段 segment
 <ul>
 <li>segment file组成：
 <ul>
-<li>index file：索引文件
+<li>index file：
 <ul>
-<li>提交文件查找效率</li>
-<li>减小索引文件占用的空间：offset-文件索引初始值=相对位置</li>
+<li>文件名是当前topic 消息的开始序列值。消费时，通过offset 二分查找文件,提高效率；</li>
+<li>索引文件内，a 相对偏移量、b 对应data 文件offset：
+<ul>
+<li>a相对偏移量=offset-文件索引初始值， 减小索引文件占用的空间；</li>
+<li>a的值设置成稀疏索引的方式 ,减少空间占用</li>
+<li>然后通过mmap 直接读取message;</li>
+</ul>
+</li>
 </ul>
 </li>
 <li>data file：数据文件</li>
@@ -282,11 +288,6 @@
 <img src="https://cafra.github.io//post-images/1589627367841.png" alt="" loading="lazy"></li>
 <li>messge 结构<br>
 <img src="https://cafra.github.io//post-images/1589628305866.png" alt="" loading="lazy"></li>
-<li>通过offset查找message过程
-<ul>
-<li>offset 通过segment file 的文件名 二分查找到对应的index 文件</li>
-</ul>
-</li>
 </ul>
 </li>
 </ul>
@@ -356,7 +357,7 @@ https://juejin.im/post/5d8882bdf265da03c9273821</p>
           </div>
           <div class="author-meta">
             <div class="author">
-              <img alt='' src="https://cafra.github.io//images/avatar.png?v=1589696381441" class='avatar avatar-72 photo' height='72' width='72'>
+              <img alt='' src="https://cafra.github.io//images/avatar.png?v=1589801197830" class='avatar avatar-72 photo' height='72' width='72'>
               <span>WRITTEN BY: &nbsp;&nbsp;&nbsp;<a href='https://cafra.github.io/'>陈贞</a> </span>
             </div>
             <div class="bio">
