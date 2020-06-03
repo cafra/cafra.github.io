@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="robots" content="all,follow">
 <meta name="googlebot" content="index,follow,snippet,archive">
-<title>ID生成器的原理 | cafra</title>
+<title>设计模式 | cafra</title>
 <link rel="shortcut icon" href="https://cafra.github.io//favicon.ico?v=1591198197614">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cafra.github.io//styles/main.css" type='text/css' media='all'>
@@ -188,37 +188,19 @@
         
 
         <div class="entry-meta">
-          <span class="date">· 2020-05-06 ·</span> <span> / </span>
+          <span class="date">· 2020-05-28 ·</span> <span> / </span>
           <span class="author">
             <a href="https://cafra.github.io/" title="" rel="author"> Blog <a href="https://www.cnblogs.com/cz-blog/" target="_blank">Linux Kernel</a></a>
           </span>
           
         </div>
         <div class='entry-header'>
-          <h1 class='entry-title'>ID生成器的原理</h1>
+          <h1 class='entry-title'>设计模式</h1>
         </div>
         <div class="entry-container">
           <div class="entry-content">
             <article>
-              <p>高效生成趋势有序的全局唯一ID，兼顾有序性、高性能、可扩展<br>
-SnowFlake原理:</p>
-<ol>
-<li>64位的整型;</li>
-<li>1位：标识部分;</li>
-<li>41位：时间戳部分，这个是毫秒级的时间，一般实现上不会存储当前的时间戳，而是时间戳的差值; 2^41 /年毫秒数=69年</li>
-<li>10位：节点部分，前5位作为数据中心标识，后5位作为机器标识，可以部署1024个节点；根据实际情况设置；</li>
-<li>12位：序列号部分，支持同一毫秒内同一个节点可以生成4096个ID；</li>
-<li>生成的ID,可以通过转62进制，准换成字母数字的10位长字符串；</li>
-</ol>
-<p>UUID：</p>
-<ol>
-<li>可以在本地产生全局唯一的ID,但不能保证递增，不适合数据主键；</li>
-</ol>
-<p>数据库自增主键：</p>
-<ol>
-<li>可以保证递增。但是无法分库分表；</li>
-<li>即使修改步长，进行分库，也不方便集群伸缩；</li>
-</ol>
+              <p>golang 版设计模式</p>
 
             </article>
           </div>
@@ -320,7 +302,7 @@ SnowFlake原理:</p>
             <nav class="navigation pagination" role="navigation">
               <h2 class="screen-reader-text">Posts navigation</h2>
               <div class="nav-links">
-                <a class="next page-numbers" href="https://cafra.github.io/post/xiao-xi-dui-lie/">下一篇->消息队列</a>
+                <a class="next page-numbers" href="https://cafra.github.io/post/xi-tong-she-ji/">下一篇->系统设计</a>
               </div>
             </nav>
           
