@@ -1,11 +1,11 @@
 <html>
 <head>
-    <meta charset="utf-8" />
+  <meta charset="utf-8" />
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="robots" content="all,follow">
 <meta name="googlebot" content="index,follow,snippet,archive">
-<title>分布式 | cafra</title>
+<title>分布式链路追踪-Opentracing(CNCF)原理 | cafra</title>
 <link rel="shortcut icon" href="https://cafra.github.io//favicon.ico?v=1593240899112">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cafra.github.io//styles/main.css" type='text/css' media='all'>
@@ -29,7 +29,8 @@
 </head>
 <body class="home blog ct-body standard">
 <div id="overflow-container" class="overflow-container">
-    <header id="site-header" class="site-header" role="banner">
+  <a class="skip-content" href="#main">Skip to content</a>
+  <header id="site-header" class="site-header" role="banner">
     <div class='top-navigation top-navigation-important'>
         <div class='container'>
             <div id="menu-secondary" class="menu-container menu-secondary" role="navigation">
@@ -180,77 +181,277 @@
 
 </header>
 
-        <div class="main-content">
-            <div class="current-tag-container">
-                <h2 class="title">
-                    标签：#分布式
-                </h2>
-            </div>
-        </div>
-    <div id="main" class="main" role="main">
-  <h1 class="screen-reader-text">Posts</h1>
-  
-  <div id="loop-container" class="loop-container">
-    <div class="post type-post status-publish format-standard  hentry category-design tag-memories
-    tag-normal-post tag-standard-2 excerpt zoom full-without-featured
-      
-      even
-       excerpt">
-      
-      <div class="excerpt-container">
-        <div class="excerpt-meta">
-          <span class="date">  · 2020-05-13 ·</span> <span> / </span>
-          <span class="author">
-              <a href="https://cafra.github.io/" title="Posts by  cafra" rel="author"> cafra</a>
-          </span>
-            
-                <span> / </span>
-                <span class="category">
-                        <a href="https://cafra.github.io/tag/WNPkOqkbp/">分布式</a>
-                </span>
-            
-                <span> / </span>
-                <span class="category">
-                        <a href="https://cafra.github.io/tag/JoThvvET_8/">微服务</a>
-                </span>
-            
-                <span> / </span>
-                <span class="category">
-                        <a href="https://cafra.github.io/tag/9Q6OszWEux/">一致性</a>
-                </span>
-            
-                <span> / </span>
-                <span class="category">
-                        <a href="https://cafra.github.io/tag/sbrecj6M1E/">架构设计</a>
-                </span>
-            
 
+  <div id="main" class="main" role="main">
+    <div id="loop-container" class="loop-container">
+      <div class="post type-post status-publish format-standard has-post-thumbnail hentry category-design tag-design tag-standard-2 tag-tagalicious tag-travel entry full-without-featured odd excerpt-1">
+        
+
+        <div class="entry-meta">
+          <span class="date">· 2020-06-27 ·</span> <span> / </span>
+          <span class="author">
+            <a href="https://cafra.github.io/" title="" rel="author"> Blog <a href="https://www.cnblogs.com/cz-blog/" target="_blank">Linux Kernel</a></a>
+          </span>
+          
         </div>
-        <div class='excerpt-header'>
-          <h2 class='excerpt-title'>
-            <a href="https://cafra.github.io/post/xi-tong-she-ji/"> 系统设计 </a>
-          </h2>
+        <div class='entry-header'>
+          <h1 class='entry-title'>分布式链路追踪-Opentracing(CNCF)原理</h1>
         </div>
-        <div class='excerpt-content'>
-          <article>
+        <div class="entry-container">
+          <div class="entry-content">
+            <article>
+              <figure data-type="image" tabindex="1"><img src="https://cafra.github.io//post-images/1593224682500.png" alt="" loading="lazy"></figure>
+<h1 id="链路追踪">链路追踪</h1>
+<h2 id="原理-opentracing-标准cncf">原理 OpenTracing 标准(CNCF )</h2>
+<h3 id="对象">对象</h3>
+<ul>
+<li>Tracer：接口用来创建Span</li>
+<li>Span ：一次方法调用, 一个程序块的调用, 或者一次RPC/数据库访问.只要是一个具有完整时间周期的程序访问，例如http 请求、mq、redis、mysql 操作等
+<ul>
+<li>An operation name，操作名称</li>
+<li>A start timestamp，起始时间</li>
+<li>A finish timestamp，结束时间</li>
+<li>Span Tag，一组键值对构成的Span标签集合</li>
+<li>Span Log，一组span的日志集合。</li>
+<li>SpanContext: Span上下文对象</li>
+<li>References：</li>
+</ul>
+</li>
+<li><strong>Baggage Items</strong>: baggage元素随trace一起保持在带内传递</li>
+</ul>
+<h3 id="操作">操作</h3>
+<ul>
+<li>StartSpan
+<ul>
+<li>operation name:抽象、通用，明确、具有统计意义;</li>
+</ul>
+</li>
+<li>Inject(serialize): <strong>将SpanContext上下文Inject（注入）到carrier</strong>
+<ul>
+<li>format（格式化）描述，一般会是一个字符串常量，但不做强制要求。通过此描述，通知Tracer实现，如何对SpanContext进行编码放入到carrier中。
+<ul>
+<li><strong>Text Map</strong>: 基于字符串：字符串的map,对于key和value不约束字符集。</li>
+<li><strong>HTTP Headers</strong>: 适合作为HTTP头信息的，基于字符串：字符串的map。</li>
+<li><strong>Binary</strong>: 一个简单的二进制大对象，记录SpanContext的信息。</li>
+</ul>
+</li>
+<li>carrier，根据format确定。Tracer实现根据format声明的格式，将SpanContext序列化到carrier对象中。</li>
+</ul>
+</li>
+<li>Extract (deserialize): 将SpanContext上下文从carrier中Extract（提取)；</li>
+</ul>
+<h2 id="源码阅读">源码阅读</h2>
+<ul>
+<li>InitGlobalTracer：初始化全局trace client,
+<ul>
+<li>service-name,</li>
+<li>采样策略，</li>
+<li>trace 上报服务地址</li>
+</ul>
+</li>
+<li>Tracer：
+<ul>
+<li>StartSpan</li>
+<li>Inject
+<ul>
+<li>ForeachBaggageItem</li>
+</ul>
+</li>
+<li>Extract</li>
+</ul>
+</li>
+<li>NewTracer
+<ul>
+<li>NewSampler : Sampler decides whether a new trace should be sampled or not.</li>
+<li>NewReporter: Reporter is called by the tracer when a span is completed to report the span to the tracing collector.</li>
+<li>初始化BuiltinFormat
+<ul>
+<li>Binary</li>
+<li>TextMap</li>
+<li>HTTPHeaders</li>
+</ul>
+</li>
+<li>初始化tags</li>
+</ul>
+</li>
+<li>使用流程：
+<ul>
+<li>GlobalTracer</li>
+<li>Extract</li>
+<li>StartSpan(pool)
+<ul>
+<li>spanctx: 不存在parent 则新建；</li>
+<li>applySamplingDecision</li>
+</ul>
+</li>
+<li>设置tag</li>
+<li>span finish
+<ul>
+<li>report</li>
+<li>Release</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>使用场景：
+<ul>
+<li>http:
+<ul>
+<li>request header Extract</li>
+</ul>
+</li>
+<li>mq:
+<ul>
+<li>pub:</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>参考资料：</p>
+<ul>
+<li>OpenTracing语义标准规范 https://www.jianshu.com/p/a963ad0bbe3e</li>
+<li>OpenTracing语义标准规范及实现 https://cloud.tencent.com/developer/article/1192466</li>
+<li>opentracing 中文文档：https://wu-sheng.gitbooks.io/opentracing-io/content/?spm=a2c4e.10696291.0.0.c45419a442g6f2</li>
+</ul>
+
+            </article>
+          </div>
+          <div class='entry-meta-bottom'>
+            <div class="entry-categories">
+              <p>
+                <span>Categories</span>
+                
+                  
+                    
+                  <a href="https://cafra.github.io/tag/WNPkOqkbp/" title="View all posts in 分布式">分布式</a>
+                    
+                    
+                    
+                  <a href="https://cafra.github.io/tag/JoThvvET_8/" title="View all posts in 微服务">微服务</a>
+                    
+                    
+                    
+                  <a href="https://cafra.github.io/tag/9Q6OszWEux/" title="View all posts in 一致性">一致性</a>
+                    
+                    
+                    
+                  <a href="https://cafra.github.io/tag/sbrecj6M1E/" title="View all posts in 架构设计">架构设计</a>
+                    
+                    
+                    
+                  <a href="https://cafra.github.io/tag/hKMfefaE3/" title="View all posts in redis">redis</a>
+                    
+                    
+                    
+                  <a href="https://cafra.github.io/tag/F89V9rO0vc/" title="View all posts in 数据类型">数据类型</a>
+                    
+                    
+                    
+                  <a href="https://cafra.github.io/tag/zilxOaBfPF/" title="View all posts in 编码类型">编码类型</a>
+                    
+                    
+                    
+                  <a href="https://cafra.github.io/tag/FxAzZWDJ3/" title="View all posts in mysql">mysql</a>
+                    
+                    
+                    
+                  <a href="https://cafra.github.io/tag/KHvGWZJGK/" title="View all posts in 妮妮">妮妮</a>
+                    
+                    
+                    
+                  <a href="https://cafra.github.io/tag/veFDGox4D7/" title="View all posts in 幸福">幸福</a>
+                    
+                    
+                    
+                  <a href="https://cafra.github.io/tag/wDrrz-W6s/" title="View all posts in mem">mem</a>
+                    
+                    
+              </p>
+            </div>
+            <div class="entry-tags">
+              <p><span>Tags</span>
+              </p>
+            </div>
+          </div>
+          <div class="author-meta">
+            <div class="author">
+              <img alt='' src="https://cafra.github.io//images/avatar.png?v=1593240899112" class='avatar avatar-72 photo' height='72' width='72'>
+              <span>WRITTEN BY: &nbsp;&nbsp;&nbsp;<a href='https://cafra.github.io/'>陈贞</a> </span>
+            </div>
+            <div class="bio">
+              <p>个人博客</p>
               
-          </article>
+                
+                  <a class="github" target="_blank"
+                     href="https://github.com/cafra">
+                    <i class="fab fa-github" title="github"></i>
+                  </a>
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+                  <a class="qq" target="_blank"
+                     href="http://wpa.qq.com/msgrd?v=3&amp;uin=2443591230&amp;site=qq&amp;menu=yes">
+                    <i class="fab fa-qq" title="qq"></i>
+                  </a>
+                
+              
+                
+              
+            </div>
+          </div>
         </div>
+          
+            <nav class="navigation pagination" role="navigation">
+              <h2 class="screen-reader-text">Posts navigation</h2>
+              <div class="nav-links">
+                <a class="next page-numbers" href="https://cafra.github.io/post/xi-tong-jia-gou-si-wei-dao-tu/">下一篇->系统架构-思维导图</a>
+              </div>
+            </nav>
+          
       </div>
+      <section id="comments" class="comments">
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: 'c553500d9b1bd090eda2',
+    clientSecret: 'd52d21f4a032fbbeb69c21a28724754c56aa443a',
+    repo: 'cafra.github.io',
+    owner: 'cafra',
+    admin: ['cafra'],
+    id: location.pathname,      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+
+          
+        
+      </section>
     </div>
   </div>
-  
-</div>
-
-    <nav class="navigation pagination" role="navigation">
-    <h2 class="screen-reader-text">Posts navigation</h2>
-    <div class="nav-links">
-        
-        
-    </div>
-</nav>
-
-    <footer id="site-footer" class="site-footer" role="contentinfo">
+  <footer id="site-footer" class="site-footer" role="contentinfo">
     <h1>
         <a href="https://cafra.github.io/"> cafra </a>
     </h1>
@@ -308,3 +509,4 @@
 </div>
 </body>
 </html>
+

@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://cafra.github.io/</id>
     <title>cafra</title>
-    <updated>2020-06-27T02:07:22.017Z</updated>
+    <updated>2020-06-27T06:55:06.904Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://cafra.github.io/"/>
     <link rel="self" href="https://cafra.github.io/atom.xml"/>
@@ -10,6 +10,13 @@
     <logo>https://cafra.github.io/images/avatar.png</logo>
     <icon>https://cafra.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, cafra</rights>
+    <entry>
+        <title type="html"><![CDATA[分布式链路追踪-Opentracing(CNCF)原理]]></title>
+        <id>https://cafra.github.io/post/fen-bu-shi-lian-lu-zhui-zong-opentracingcncfyuan-li/</id>
+        <link href="https://cafra.github.io/post/fen-bu-shi-lian-lu-zhui-zong-opentracingcncfyuan-li/">
+        </link>
+        <updated>2020-06-27T02:13:46.000Z</updated>
+    </entry>
     <entry>
         <title type="html"><![CDATA[系统架构-思维导图]]></title>
         <id>https://cafra.github.io/post/xi-tong-jia-gou-si-wei-dao-tu/</id>
@@ -147,17 +154,6 @@
 </tr>
 </tbody>
 </table>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[mysql 应用和原理]]></title>
-        <id>https://cafra.github.io/post/mysql-update-zhi-xing-guo-cheng/</id>
-        <link href="https://cafra.github.io/post/mysql-update-zhi-xing-guo-cheng/">
-        </link>
-        <updated>2020-05-05T02:50:53.000Z</updated>
-        <summary type="html"><![CDATA[<h1 id="update-执行过程">update 执行过程</h1>
-]]></summary>
-        <content type="html"><![CDATA[<h1 id="update-执行过程">update 执行过程</h1>
 ]]></content>
     </entry>
 </feed>
