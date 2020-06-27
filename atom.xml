@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://cafra.github.io/</id>
     <title>cafra</title>
-    <updated>2020-06-27T06:55:06.904Z</updated>
+    <updated>2020-06-27T07:12:57.701Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://cafra.github.io/"/>
     <link rel="self" href="https://cafra.github.io/atom.xml"/>
@@ -10,6 +10,13 @@
     <logo>https://cafra.github.io/images/avatar.png</logo>
     <icon>https://cafra.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, cafra</rights>
+    <entry>
+        <title type="html"><![CDATA[Golang 原理源码阅读系列]]></title>
+        <id>https://cafra.github.io/post/golang-yuan-li-yuan-ma-yue-du-xi-lie/</id>
+        <link href="https://cafra.github.io/post/golang-yuan-li-yuan-ma-yue-du-xi-lie/">
+        </link>
+        <updated>2020-06-27T07:07:54.000Z</updated>
+    </entry>
     <entry>
         <title type="html"><![CDATA[分布式链路追踪-Opentracing(CNCF)原理]]></title>
         <id>https://cafra.github.io/post/fen-bu-shi-lian-lu-zhui-zong-opentracingcncfyuan-li/</id>
@@ -32,14 +39,7 @@
         <updated>2020-06-03T15:02:46.000Z</updated>
     </entry>
     <entry>
-        <title type="html"><![CDATA[设计模式]]></title>
-        <id>https://cafra.github.io/post/she-ji-mo-shi/</id>
-        <link href="https://cafra.github.io/post/she-ji-mo-shi/">
-        </link>
-        <updated>2020-05-28T06:52:26.000Z</updated>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[系统设计]]></title>
+        <title type="html"><![CDATA[分布式系统一致性方法论]]></title>
         <id>https://cafra.github.io/post/xi-tong-she-ji/</id>
         <link href="https://cafra.github.io/post/xi-tong-she-ji/">
         </link>
@@ -53,7 +53,7 @@
         <updated>2020-05-07T13:44:35.000Z</updated>
     </entry>
     <entry>
-        <title type="html"><![CDATA[web 框架相关]]></title>
+        <title type="html"><![CDATA[web 框架源码阅读]]></title>
         <id>https://cafra.github.io/post/web-kuang-jia-xiang-guan/</id>
         <link href="https://cafra.github.io/post/web-kuang-jia-xiang-guan/">
         </link>
