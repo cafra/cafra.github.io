@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://cafra.github.io/</id>
     <title>cafra</title>
-    <updated>2020-07-15T14:45:28.955Z</updated>
+    <updated>2020-07-17T14:59:56.827Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://cafra.github.io/"/>
     <link rel="self" href="https://cafra.github.io/atom.xml"/>
@@ -11,7 +11,14 @@
     <icon>https://cafra.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, cafra</rights>
     <entry>
-        <title type="html"><![CDATA[中间件-熔断组件hystrix]]></title>
+        <title type="html"><![CDATA[golang 底层源码阅读]]></title>
+        <id>https://cafra.github.io/post/golang-di-ceng-yuan-ma-yue-du/</id>
+        <link href="https://cafra.github.io/post/golang-di-ceng-yuan-ma-yue-du/">
+        </link>
+        <updated>2020-07-17T10:24:14.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[服务高可用-限流、熔断、降级、混沌工程]]></title>
         <id>https://cafra.github.io/post/zhong-jian-jian-rong-duan-zu-jian-hystrix/</id>
         <link href="https://cafra.github.io/post/zhong-jian-jian-rong-duan-zu-jian-hystrix/">
         </link>
@@ -72,12 +79,5 @@
         <link href="https://cafra.github.io/post/id-sheng-cheng-qi-de-yuan-li/">
         </link>
         <updated>2020-05-06T00:49:16.000Z</updated>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[消息队列]]></title>
-        <id>https://cafra.github.io/post/xiao-xi-dui-lie/</id>
-        <link href="https://cafra.github.io/post/xiao-xi-dui-lie/">
-        </link>
-        <updated>2020-05-05T15:52:25.000Z</updated>
     </entry>
 </feed>
