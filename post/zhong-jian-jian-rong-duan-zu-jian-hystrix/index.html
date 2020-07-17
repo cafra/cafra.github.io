@@ -6,7 +6,7 @@
 <meta name="robots" content="all,follow">
 <meta name="googlebot" content="index,follow,snippet,archive">
 <title>服务高可用-限流、熔断、降级、混沌工程 | cafra</title>
-<link rel="shortcut icon" href="https://cafra.github.io//favicon.ico?v=1594997989712">
+<link rel="shortcut icon" href="https://cafra.github.io//favicon.ico?v=1594998251777">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cafra.github.io//styles/main.css" type='text/css' media='all'>
 
@@ -256,15 +256,18 @@
         <div class="entry-container">
           <div class="entry-content">
             <article>
-              <h1 id="目的防止分布式系统雪崩">目的：防止分布式系统雪崩；</h1>
-<h1 id="方法熔断和自恢复">方法：熔断和自恢复；</h1>
-<h1 id="状态机">状态机：</h1>
+              <ul>
+<li>目的：防止分布式系统雪崩；</li>
+<li>方法：熔断和自恢复；</li>
+<li>状态机：
 <ul>
 <li>closed,open,half-open 自动切换：</li>
+<li>open状态：  说明打开熔断，也就是服务调用方执行本地降级策略，不进行远程调用。</li>
+<li>closed状态：说明关闭了熔断，这时候服务调用方直接发起远程调用。</li>
+<li>half-open状态：则是一个中间状态，当熔断器处于这种状态时候，直接发起远程调用。</li>
 </ul>
-<h2 id="open状态-说明打开熔断也就是服务调用方执行本地降级策略不进行远程调用">open状态：  说明打开熔断，也就是服务调用方执行本地降级策略，不进行远程调用。</h2>
-<h2 id="closed状态说明关闭了熔断这时候服务调用方直接发起远程调用">closed状态：说明关闭了熔断，这时候服务调用方直接发起远程调用。</h2>
-<h2 id="half-open状态则是一个中间状态当熔断器处于这种状态时候直接发起远程调用">half-open状态：则是一个中间状态，当熔断器处于这种状态时候，直接发起远程调用。</h2>
+</li>
+</ul>
 <figure data-type="image" tabindex="1"><img src="https://cafra.github.io//post-images/1594788310385.png" alt="" loading="lazy"></figure>
 <h1 id="详细参数说明">详细参数说明</h1>
 <table>
@@ -304,10 +307,12 @@
 </tbody>
 </table>
 <h1 id="隔离">隔离</h1>
-<h2 id="数据隔离">数据隔离</h2>
-<h2 id="机器隔离-核心业务提供独立服务通过client-id-切流">机器隔离 核心业务提供独立服务，通过client ID 切流</h2>
-<h2 id="协程池隔离-不同响应的rpc-隔离开并限制协诚池的大小">协程池隔离 不同响应的rpc 隔离开，并限制协诚池的大小</h2>
-<h2 id="信号量隔离-atomic-计数控制并发量">信号量隔离 atomic 计数控制并发量</h2>
+<ul>
+<li>数据隔离</li>
+<li>机器隔离 核心业务提供独立服务，通过client ID 切流</li>
+<li>协程池隔离 不同响应的rpc 隔离开，并限制协诚池的大小</li>
+<li>信号量隔离 atomic 计数控制并发量</li>
+</ul>
 <h1 id="限流">限流</h1>
 <ul>
 <li>是服务端对请求过载限制的保护方式</li>
@@ -475,7 +480,7 @@
           </div>
           <div class="author-meta">
             <div class="author">
-              <img alt='' src="https://cafra.github.io//images/avatar.png?v=1594997989712" class='avatar avatar-72 photo' height='72' width='72'>
+              <img alt='' src="https://cafra.github.io//images/avatar.png?v=1594998251777" class='avatar avatar-72 photo' height='72' width='72'>
               <span>WRITTEN BY: &nbsp;&nbsp;&nbsp;<a href='https://cafra.github.io/'>陈贞</a> </span>
             </div>
             <div class="bio">
