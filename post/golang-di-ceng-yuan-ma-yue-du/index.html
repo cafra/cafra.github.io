@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="robots" content="all,follow">
 <meta name="googlebot" content="index,follow,snippet,archive">
-<title>golang 底层源码阅读 | cafra</title>
-<link rel="shortcut icon" href="https://cafra.github.io//favicon.ico?v=1594998251777">
+<title>golang 底层数据结构和算法源码阅读 | cafra</title>
+<link rel="shortcut icon" href="https://cafra.github.io//favicon.ico?v=1595206981884">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cafra.github.io//styles/main.css" type='text/css' media='all'>
 
@@ -41,58 +41,44 @@
                         
                             
                         <li id="menu-item" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item">
-                            <a href="https://cafra.github.io/tag/37mY5BgOC/">golang</a>
+                            <a href="https://cafra.github.io/tag/foglYXJWT/">opentracing</a>
                         </li>
                             
                         
                             
                         <li id="menu-item" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item">
-                            <a href="https://cafra.github.io/tag/_e9LmXNyzm/">原理</a>
+                            <a href="https://cafra.github.io/tag/r8kWaAtkIf/">trace</a>
                         </li>
                             
                         
                             
                         <li id="menu-item" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item">
-                            <a href="https://cafra.github.io/tag/sgl0oVuKDQ/">map</a>
+                            <a href="https://cafra.github.io/tag/vWgsm2Z42L/">span</a>
                         </li>
                             
                         
                             
                         <li id="menu-item" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item">
-                            <a href="https://cafra.github.io/tag/ccYjmxbjOn/">slice</a>
+                            <a href="https://cafra.github.io/tag/qefX6pbR_w/">CNCF</a>
                         </li>
                             
                         
                             
                         <li id="menu-item" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item">
-                            <a href="https://cafra.github.io/tag/k7qIDSeBVi/">pool</a>
+                            <a href="https://cafra.github.io/tag/WNPkOqkbp/">分布式</a>
                         </li>
                             
                         
                             
                         <li id="menu-item" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item">
-                            <a href="https://cafra.github.io/tag/20Ml9qm11l/">channel</a>
+                            <a href="https://cafra.github.io/tag/jsrMCiSD5/">分布式架构</a>
                         </li>
                             
                         
                             
                         <li id="menu-item" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item">
-                            <a href="https://cafra.github.io/tag/MOQ-ScvFnB/">pprof</a>
+                            <a href="https://cafra.github.io/tag/loboG6ob16/">高并发</a>
                         </li>
-                            
-                        
-                            
-                        
-                            
-                        
-                            
-                        
-                            
-                        
-                            
-                        
-                            
-                        
                             
                         
                             
@@ -251,7 +237,7 @@
           
         </div>
         <div class='entry-header'>
-          <h1 class='entry-title'>golang 底层源码阅读</h1>
+          <h1 class='entry-title'>golang 底层数据结构和算法源码阅读</h1>
         </div>
         <div class="entry-container">
           <div class="entry-content">
@@ -368,7 +354,53 @@ func recv(c *hchan, sg *sudog, ep unsafe.Pointer, unlockf func(), skip int) {
 
 
 </code></pre>
-<h1 id="map-slice-interfacemutex-底层原理">map、slice、interface，mutex 底层原理；</h1>
+<h1 id="map-底层数据结构和算法">map 底层数据结构和算法</h1>
+<ul>
+<li>map 存储结构</li>
+<li>map的make、set 、get、range、keys 源码阅读</li>
+</ul>
+<pre><code class="language-go">type hmap struct {
+	count     int // map 的数据个数
+	flags     uint8
+	B         uint8  // 负荷系数 2^B 个数据量
+	noverflow uint16 // 
+	hash0     uint32 // hash seed
+	buckets    unsafe.Pointer //  桶的数组指针
+	oldbuckets unsafe.Pointer // 数据增长时，变换前的旧桶数组指针
+	nevacuate  uintptr        // 
+	extra *mapextra // 额外 数据
+}
+type mapextra struct {
+    // 如果key 或 elem 不包含指针，才会使用当前结构，目的是避免gc 扫描 ，提高性能
+	overflow    *[]*bmap
+	oldoverflow *[]*bmap
+	nextOverflow *bmap
+}
+type bmap struct {
+	tophash [bucketCnt]uint8 
+}
+// 迭代器定义
+type hiter struct {
+	key         unsafe.Pointer // key
+	elem        unsafe.Pointer // value
+	t           *maptype // 类型
+	h           *hmap // map 指针
+	buckets     unsafe.Pointer // 所在桶
+	bptr        *bmap          // current bucket
+	overflow    *[]*bmap       // keeps overflow buckets of hmap.buckets alive
+	oldoverflow *[]*bmap       // keeps overflow buckets of hmap.oldbuckets alive
+	startBucket uintptr        // bucket iteration started at
+	offset      uint8          //
+	wrapped     bool           // 
+	B           uint8
+	i           uint8
+	bucket      uintptr
+	checkBucket uintptr
+}
+
+
+</code></pre>
+<h1 id="slice-interfacemutex-底层原理">slice、interface，mutex 底层原理；</h1>
 <h1 id="调度模型">调度模型</h1>
 <p>M：内核级线程<br>
 G：代表一个goroutine<br>
@@ -382,34 +414,6 @@ P：Processor，处理器，用来管理和执行goroutine的。</p>
                 <span>Categories</span>
                 
                   
-                    
-                  <a href="https://cafra.github.io/tag/37mY5BgOC/" title="View all posts in golang">golang</a>
-                    
-                    
-                    
-                  <a href="https://cafra.github.io/tag/_e9LmXNyzm/" title="View all posts in 原理">原理</a>
-                    
-                    
-                    
-                  <a href="https://cafra.github.io/tag/sgl0oVuKDQ/" title="View all posts in map">map</a>
-                    
-                    
-                    
-                  <a href="https://cafra.github.io/tag/ccYjmxbjOn/" title="View all posts in slice">slice</a>
-                    
-                    
-                    
-                  <a href="https://cafra.github.io/tag/k7qIDSeBVi/" title="View all posts in pool">pool</a>
-                    
-                    
-                    
-                  <a href="https://cafra.github.io/tag/20Ml9qm11l/" title="View all posts in channel">channel</a>
-                    
-                    
-                    
-                  <a href="https://cafra.github.io/tag/MOQ-ScvFnB/" title="View all posts in pprof">pprof</a>
-                    
-                    
                     
                   <a href="https://cafra.github.io/tag/foglYXJWT/" title="View all posts in opentracing">opentracing</a>
                     
@@ -427,17 +431,31 @@ P：Processor，处理器，用来管理和执行goroutine的。</p>
                     
                     
                     
+                  <a href="https://cafra.github.io/tag/WNPkOqkbp/" title="View all posts in 分布式">分布式</a>
                     
                     
                     
+                  <a href="https://cafra.github.io/tag/jsrMCiSD5/" title="View all posts in 分布式架构">分布式架构</a>
                     
                     
                     
+                  <a href="https://cafra.github.io/tag/loboG6ob16/" title="View all posts in 高并发">高并发</a>
                     
                     
                     
+                  <a href="https://cafra.github.io/tag/hzKkVGX8ve/" title="View all posts in 高可用">高可用</a>
                     
                     
+                    
+                  <a href="https://cafra.github.io/tag/F42C1dS5CZ/" title="View all posts in 弹性伸缩">弹性伸缩</a>
+                    
+                    
+                    
+                  <a href="https://cafra.github.io/tag/-GADmbhnLF/" title="View all posts in 扩展性">扩展性</a>
+                    
+                    
+                    
+                  <a href="https://cafra.github.io/tag/nzRWdZ2c8H/" title="View all posts in 安全性">安全性</a>
                     
                     
                     
@@ -491,7 +509,7 @@ P：Processor，处理器，用来管理和执行goroutine的。</p>
           </div>
           <div class="author-meta">
             <div class="author">
-              <img alt='' src="https://cafra.github.io//images/avatar.png?v=1594998251777" class='avatar avatar-72 photo' height='72' width='72'>
+              <img alt='' src="https://cafra.github.io//images/avatar.png?v=1595206981884" class='avatar avatar-72 photo' height='72' width='72'>
               <span>WRITTEN BY: &nbsp;&nbsp;&nbsp;<a href='https://cafra.github.io/'>陈贞</a> </span>
             </div>
             <div class="bio">

@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://cafra.github.io/</id>
     <title>cafra</title>
-    <updated>2020-07-17T15:04:17.688Z</updated>
+    <updated>2020-07-20T01:03:07.020Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://cafra.github.io/"/>
     <link rel="self" href="https://cafra.github.io/atom.xml"/>
@@ -11,7 +11,14 @@
     <icon>https://cafra.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, cafra</rights>
     <entry>
-        <title type="html"><![CDATA[golang 底层源码阅读]]></title>
+        <title type="html"><![CDATA[通信方式]]></title>
+        <id>https://cafra.github.io/post/tong-xin-fang-shi/</id>
+        <link href="https://cafra.github.io/post/tong-xin-fang-shi/">
+        </link>
+        <updated>2020-07-20T00:26:14.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[golang 底层数据结构和算法源码阅读]]></title>
         <id>https://cafra.github.io/post/golang-di-ceng-yuan-ma-yue-du/</id>
         <link href="https://cafra.github.io/post/golang-di-ceng-yuan-ma-yue-du/">
         </link>
@@ -23,13 +30,6 @@
         <link href="https://cafra.github.io/post/zhong-jian-jian-rong-duan-zu-jian-hystrix/">
         </link>
         <updated>2020-07-15T04:22:00.000Z</updated>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Golang 原理源码阅读系列]]></title>
-        <id>https://cafra.github.io/post/golang-yuan-li-yuan-ma-yue-du-xi-lie/</id>
-        <link href="https://cafra.github.io/post/golang-yuan-li-yuan-ma-yue-du-xi-lie/">
-        </link>
-        <updated>2020-06-27T07:07:54.000Z</updated>
     </entry>
     <entry>
         <title type="html"><![CDATA[分布式链路追踪-Opentracing(CNCF)原理]]></title>
