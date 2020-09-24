@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="robots" content="all,follow">
 <meta name="googlebot" content="index,follow,snippet,archive">
-<title>工程管理硕士开始备考点滴 | cafra</title>
+<title>代码类图查看 | cafra</title>
 <link rel="shortcut icon" href="https://cafra.github.io//favicon.ico?v=1600938680266">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cafra.github.io//styles/main.css" type='text/css' media='all'>
@@ -228,39 +228,70 @@
     <div id="loop-container" class="loop-container">
       <div class="post type-post status-publish format-standard has-post-thumbnail hentry category-design tag-design tag-standard-2 tag-tagalicious tag-travel entry full-without-featured odd excerpt-1">
         
-          <div class='featured-image lazy lazy-bg-image' data-background="https://cafra.github.io//post-images/mem.png">
-          </div>
-        
 
         <div class="entry-meta">
-          <span class="date">· 2019-04-20 ·</span> <span> / </span>
+          <span class="date">· 2020-09-24 ·</span> <span> / </span>
           <span class="author">
             <a href="https://cafra.github.io/" title="" rel="author"> Blog <a href="https://www.cnblogs.com/cz-blog/" target="_blank">Linux Kernel</a></a>
           </span>
           
-            <span class="category">
-                    <span> / </span>
-                    <a href="https://cafra.github.io/tag/wDrrz-W6s/">mem</a>
-                </span>
-          
         </div>
         <div class='entry-header'>
-          <h1 class='entry-title'>工程管理硕士开始备考点滴</h1>
+          <h1 class='entry-title'>代码类图查看</h1>
         </div>
         <div class="entry-container">
           <div class="entry-content">
             <article>
-              <p>👏  终于下定决心<strong>考研</strong>了！<br>
-✍️  <strong>考研</strong></p>
-<pre><code> 大学时为了媳妇和孩子，放弃了考研；
- 现在每天除了工作、加班；其他时间都是备考和健身；
- 在孩子美好的童年，媳妇最美的时光，不能陪伴他们，希望当我获得北航MEM后，可以多陪陪家人；
-
+              <h1 id="目的解决复杂项目中代码类-接口的关系图谱">目的：解决复杂项目中，代码类、接口的关系图谱；</h1>
+<h1 id="原理javaphpcgolang等面向对象语言都可以">原理（java\php\c++\golang等面向对象语言都可以）：</h1>
+<ul>
+<li>分析项目代码，生成UML 图；</li>
+<li>通过工具展示uml 图；</li>
+</ul>
+<h1 id="具体操作以golang-为例">具体操作（以golang 为例）：</h1>
+<h2 id="1-安装分析工具go-package-plantuml">1. 安装分析工具：go-package-plantuml</h2>
+<pre><code>go get -u -v git.oschina.net/jscode/go-package-plantuml
 </code></pre>
-<!-- more -->
-<p>提前面试准备 https://github.com/cafra/mem</p>
-<p><a href="https://github.com/cafra">Github</a><br>
-<a href="https://www.cnblogs.com/cz-blog/">博客</a></p>
+<h2 id="2-生成源码的uml-文件">2. 生成源码的UML 文件：</h2>
+<pre><code>./go-package-plantuml --codedir /appdev/gopath/src/github.com/contiv/netplugin \
+--gopath /appdev/gopath \
+--outputfile  /tmp/result \
+--ignoredir /appdev/gopath/src/github.com/contiv/netplugin/vendor
+
+参数说明
+--codedir 要分析的代码目录
+--gopath GOPATH环境变量目录
+--outputfile 分析结果保存到该文件
+--ignoredir 不需要进行代码分析的目录（可以不用设置）
+</code></pre>
+<h2 id="3-安装展示工具目的就是把planuml展示">3. 安装展示工具(目的就是把planUML展示)：</h2>
+<ul>
+<li>方案1：直接在线工具展示。 地址： https://plantuml.com/zh/class-diagram<br>
+优点：无依赖，可以快速查看；<br>
+缺点：对于比较复杂的uml 展示效果可能不太好</li>
+<li>方案2:  通过java 程序渲染文件。plantuml.jar<br>
+优点：可以生成svg, 高清图；<br>
+缺点：依赖较多，使用麻烦；</li>
+</ul>
+<pre><code>java -jar plantuml.jar /tmp/text.uml -tsvg
+注意：
+1. 下载安装 plantuml https://nchc.dl.sourceforge.net/project/plantuml/plantuml.jar
+2. 下载安装 java sdk
+</code></pre>
+<ul>
+<li>方案3：通过goland plugin 展示；<br>
+优点：安装方便，可以随时编辑和预览文件，也可以查看svg图；
+<ul>
+<li>插件库，安装plantUML 插件（或则去goland 官网安装）</li>
+<li>打开uml 文件，直接在plantUML 面板中查看即可（可以右击，选择svg 打开）<br>
+<img src="https://cafra.github.io//post-images/1600938022978.png" alt="" loading="lazy"></li>
+</ul>
+</li>
+</ul>
+<h1 id="遗留问题">遗留问题：</h1>
+<p>项目代码结构扁平,出来的图谱比较密集，查看效果不好，<br>
+不过可以通过调整UML 中的布局方式，让布局合理点；<br>
+<img src="https://cafra.github.io//post-images/1600938611771.png" alt="" loading="lazy"></p>
 
             </article>
           </div>
@@ -404,7 +435,7 @@
             <nav class="navigation pagination" role="navigation">
               <h2 class="screen-reader-text">Posts navigation</h2>
               <div class="nav-links">
-                <a class="next page-numbers" href="https://cafra.github.io/post/about/">下一篇->关于</a>
+                <a class="next page-numbers" href="https://cafra.github.io/post/tong-xin-fang-shi/">下一篇->通信方式</a>
               </div>
             </nav>
           
