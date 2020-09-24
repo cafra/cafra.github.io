@@ -6,7 +6,7 @@
 <meta name="robots" content="all,follow">
 <meta name="googlebot" content="index,follow,snippet,archive">
 <title>代码类图查看 | cafra</title>
-<link rel="shortcut icon" href="https://cafra.github.io//favicon.ico?v=1600938760957">
+<link rel="shortcut icon" href="https://cafra.github.io//favicon.ico?v=1600942492209">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cafra.github.io//styles/main.css" type='text/css' media='all'>
 
@@ -277,17 +277,17 @@
         <div class="entry-container">
           <div class="entry-content">
             <article>
-              <h1 id="目的解决复杂项目中代码类-接口的关系图谱">目的：解决复杂项目中，代码类、接口的关系图谱；</h1>
-<h1 id="原理javaphpcgolang等面向对象语言都可以">原理（java\php\c++\golang等面向对象语言都可以）：</h1>
+              <h2 id="目的解决复杂项目中代码类-接口的关系图谱">目的：解决复杂项目中，代码类、接口的关系图谱；</h2>
+<h2 id="原理javaphpcgolang等面向对象语言都可以">原理（java\php\c++\golang等面向对象语言都可以）：</h2>
 <ul>
 <li>分析项目代码，生成UML 图；</li>
 <li>通过工具展示uml 图；</li>
 </ul>
-<h1 id="具体操作以golang-为例">具体操作（以golang 为例）：</h1>
-<h2 id="1-安装分析工具go-package-plantuml">1. 安装分析工具：go-package-plantuml</h2>
+<h2 id="具体操作以golang-为例">具体操作（以golang 为例）：</h2>
+<h3 id="1-安装分析工具go-package-plantuml">1. 安装分析工具：go-package-plantuml</h3>
 <pre><code>go get -u -v git.oschina.net/jscode/go-package-plantuml
 </code></pre>
-<h2 id="2-生成源码的uml-文件">2. 生成源码的UML 文件：</h2>
+<h3 id="2-生成源码的uml-文件">2. 生成源码的UML 文件：</h3>
 <pre><code>./go-package-plantuml --codedir /appdev/gopath/src/github.com/contiv/netplugin \
 --gopath /appdev/gopath \
 --outputfile  /tmp/result \
@@ -299,7 +299,7 @@
 --outputfile 分析结果保存到该文件
 --ignoredir 不需要进行代码分析的目录（可以不用设置）
 </code></pre>
-<h2 id="3-安装展示工具目的就是把planuml展示">3. 安装展示工具(目的就是把planUML展示)：</h2>
+<h3 id="3-安装展示工具目的就是把planuml展示">3. 安装展示工具(目的就是把planUML展示)：</h3>
 <ul>
 <li>方案1：直接在线工具展示。 地址： https://plantuml.com/zh/class-diagram<br>
 优点：无依赖，可以快速查看；<br>
@@ -323,10 +323,15 @@
 </ul>
 </li>
 </ul>
-<h1 id="遗留问题">遗留问题：</h1>
-<p>项目代码结构扁平,出来的图谱比较密集，查看效果不好，<br>
+<h2 id="补充说明">补充说明：</h2>
+<ol>
+<li>项目代码结构扁平,出来的图谱比较密集，查看效果不好，<br>
 不过可以通过调整UML 中的布局方式，让布局合理点；<br>
-<img src="https://cafra.github.io//post-images/1600938611771.png" alt="" loading="lazy"></p>
+<img src="https://cafra.github.io//post-images/1600938611771.png" alt="" loading="lazy"></li>
+<li>omnigraffle可以查看和拖动对象，盗版软件 https://macwk.com/soft/omnigraffle</li>
+<li>查看代码运行时的工具。https://github.com/ofabry/go-callvis<br>
+<img src="https://cafra.github.io//post-images/1600942464635.png" alt="" loading="lazy"></li>
+</ol>
 
             </article>
           </div>
@@ -441,7 +446,7 @@
           </div>
           <div class="author-meta">
             <div class="author">
-              <img alt='' src="https://cafra.github.io//images/avatar.png?v=1600938760957" class='avatar avatar-72 photo' height='72' width='72'>
+              <img alt='' src="https://cafra.github.io//images/avatar.png?v=1600942492209" class='avatar avatar-72 photo' height='72' width='72'>
               <span>WRITTEN BY: &nbsp;&nbsp;&nbsp;<a href='https://cafra.github.io/'>陈贞</a> </span>
             </div>
             <div class="bio">
